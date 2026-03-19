@@ -109,3 +109,23 @@ def process_waste(barcode, image, waste_type=None, bin_type=None):
     })
 
     return waste_type, bin_type, bin_info["duration"]
+
+# # ----------- core/pipeline/processor.py -----------
+# # Tambahkan fungsi untuk handle berbagai tipe image
+# def ensure_pil_image(image):
+#     """Convert various image types to PIL Image"""
+#     from PIL import Image
+#     import io
+    
+#     if isinstance(image, Image.Image):
+#         return image
+#     elif hasattr(image, 'read'):
+#         # Streamlit UploadedFile
+#         image.seek(0)
+#         return Image.open(image)
+#     elif isinstance(image, bytes):
+#         return Image.open(io.BytesIO(image))
+#     elif isinstance(image, str):
+#         return Image.open(image)
+#     else:
+#         return image

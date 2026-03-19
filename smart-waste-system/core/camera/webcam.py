@@ -1,40 +1,40 @@
 
-# ----------- core/camera/webcam.py -----------
-import streamlit as st
-
-def capture_image():
-    return st.camera_input("Capture Waste Image")
-
+# # ----------- core/camera/webcam.py -----------
 # import streamlit as st
 
 # def capture_image():
-#     st.subheader("📷 Capture or Upload Waste Image")
+#     return st.camera_input("Capture Waste Image")
 
-#     tab1, tab2 = st.tabs(["📷 Camera", "📁 Upload"])
+import streamlit as st
 
-#     img = None
+def capture_image():
+    st.subheader("📷 Capture or Upload Waste Image")
 
-#     # =============================
-#     # CAMERA TAB
-#     # =============================
-#     with tab1:
-#         st.caption("Use camera (recommended on phone)")
+    tab1, tab2 = st.tabs(["📷 Camera", "📁 Upload"])
 
-#         img = st.camera_input("Take a photo")
+    img = None
 
-#         if img is None:
-#             st.info("👉 If camera doesn't work, use Upload tab")
+    # =============================
+    # CAMERA TAB
+    # =============================
+    with tab1:
+        st.caption("Use camera (recommended on phone)")
 
-#     # =============================
-#     # UPLOAD TAB (FALLBACK)
-#     # =============================
-#     with tab2:
-#         uploaded = st.file_uploader(
-#             "Upload image",
-#             type=["jpg", "jpeg", "png"]
-#         )
+        img = st.camera_input("Take a photo")
 
-#         if uploaded is not None:
-#             img = uploaded
+        if img is None:
+            st.info("👉 If camera doesn't work, use Upload tab")
 
-#     return img
+    # =============================
+    # UPLOAD TAB (FALLBACK)
+    # =============================
+    with tab2:
+        uploaded = st.file_uploader(
+            "Upload image",
+            type=["jpg", "jpeg", "png"]
+        )
+
+        if uploaded is not None:
+            img = uploaded
+
+    return img

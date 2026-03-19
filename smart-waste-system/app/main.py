@@ -14,7 +14,12 @@ st.markdown("""
 
 Use the sidebar to navigate:
 
-- 👤 User → Scan & dispose waste  
-- 🛠️ Admin → Test classification  
-- 📊 Dashboard → Monitor bins in real-time  
+- 👤 **User Mode** → Scan barcode & dispose waste  
+- 🛠️ **Admin Mode** → Test classification & override  
+- 📊 **Dashboard** → Monitor bins in real-time
+- 🎮 **Digital Twin** → Virtual representation of waste bins
 """)
+
+# Optional: tampilkan preview
+st.divider()
+st.caption("📌 Select a page from the sidebar to get started")
