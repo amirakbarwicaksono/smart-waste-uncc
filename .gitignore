@@ -1,0 +1,46 @@
+# Virtual Environment
+.venv/
+venv/
+ENV/
+env/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# TensorFlow models
+models/*.h5
+models/*.tflite
+models/*.json
+!models/class_indices.json  # (kecuali file kecil ini)
+
+# Dataset
+data/raw/*
+data/processed/*
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+
+# Logs
+logs/*.csv
+logs/images/
+!logs/.gitkeep
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Streamlit
+.streamlit/
+
+# MQTT Config
+*.conf
+*.secret
