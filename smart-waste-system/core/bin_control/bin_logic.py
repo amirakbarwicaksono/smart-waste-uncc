@@ -12,7 +12,7 @@ def open_bin(bin_type):
     open_time = round(start, 2)
 
     with st.spinner("Bin is open..."):
-        time.sleep(5)
+        time.sleep(60)
 
     end = time.time()
     duration = round(end - start, 2)
