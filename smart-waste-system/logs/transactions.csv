@@ -1,275 +1,105 @@
 timestamp,barcode,waste_type,bin_type,bin_state,bin_duration_sec
-2026-03-19T15:53:54.770798,123456,metal,recycling,open,0
-2026-03-19T15:53:59.781509,123456,metal,recycling,closed,5.01
-2026-03-19T15:55:45.428158,123456,metal,recycling,open,0
-2026-03-19T15:55:50.441378,123456,metal,recycling,closed,5.01
-2026-03-19T15:55:52.481878,123456,plastic,recycling,open,0
-2026-03-19T15:55:57.490701,123456,plastic,recycling,closed,5.01
-2026-03-19T16:03:59.566810,123456,plastic,recycling,open,0
-2026-03-19T16:04:04.569474,123456,plastic,recycling,closed,5.0
-2026-03-19T16:04:21.116396,123456,plastic,recycling,open,0
-2026-03-19T16:04:26.124148,123456,plastic,recycling,closed,5.01
-2026-03-19T16:04:42.164176,123456,metal,recycling,open,0
-2026-03-19T16:04:47.412837,123456,metal,recycling,closed,5.01
-2026-03-19T16:04:53.860003,123456,paper,recycling,open,0
-2026-03-19T16:04:58.868559,123456,paper,recycling,closed,5.01
-2026-03-19T16:05:07.805113,123456,paper,recycling,open,0
-2026-03-19T16:05:12.880887,123456,paper,recycling,closed,5.01
-2026-03-19T16:05:23.369898,123456,metal,recycling,open,0
-2026-03-19T16:05:28.532469,123456,metal,recycling,closed,5.0
-2026-03-19T16:08:38.652161,111111,food organics,food_waste,open,0
-2026-03-19T16:08:43.660466,111111,food organics,food_waste,closed,5.01
-2026-03-19T16:10:36.952364,111111,food organics,food_waste,open,0
-2026-03-19T16:10:41.961038,111111,food organics,food_waste,closed,5.01
-2026-03-19T16:11:37.859222,1234567,food organics,food_waste,open,0
-2026-03-19T16:11:42.863802,1234567,food organics,food_waste,closed,5.0
-2026-03-19T16:12:10.327013,1234567,plastic,recycling,open,0
-2026-03-19T16:12:15.353291,1234567,plastic,recycling,closed,5.01
-2026-03-19T16:13:12.801018,1234567,metal,recycling,open,0
-2026-03-19T16:13:17.809309,1234567,metal,recycling,closed,5.01
-2026-03-19T16:13:27.798344,1234567,metal,recycling,open,0
-2026-03-19T16:13:32.806627,1234567,metal,recycling,closed,5.01
-2026-03-19T16:13:44.026408,1234567,metal,recycling,open,0
-2026-03-19T16:13:49.034404,1234567,metal,recycling,closed,5.01
-2026-03-19T16:13:55.286416,1234567,plastic,recycling,open,0
-2026-03-19T16:14:00.293708,1234567,plastic,recycling,closed,5.01
-2026-03-19T16:14:36.892723,123458,food organics,food_waste,open,0
-2026-03-19T16:14:41.900904,123458,food organics,food_waste,closed,5.01
-2026-03-19T16:30:29.175724,123458,cardboard,recycling,open,0
-2026-03-19T16:30:35.273069,123458,plastic,recycling,open,0
-2026-03-19T16:30:40.279570,123458,plastic,recycling,closed,5.01
-2026-03-19T16:30:41.672448,123458,miscellaneous trash,other,open,0
-2026-03-19T16:30:46.676598,123458,miscellaneous trash,other,closed,5.0
-2026-03-19T16:30:55.846518,123458,miscellaneous trash,other,open,0
-2026-03-19T16:31:00.854591,123458,miscellaneous trash,other,closed,5.01
-2026-03-19T16:34:21.812146,123458,glass,recycling,open,0
-2026-03-19T16:34:26.820328,123458,glass,recycling,closed,5.01
-2026-03-19T16:41:58.980366,123456,glass,recycling,open,0
-2026-03-19T16:42:03.988326,123456,glass,recycling,closed,5.01
-2026-03-19T16:42:19.575786,123456,food organics,food_waste,open,0
-2026-03-19T16:42:24.583188,123456,food organics,food_waste,closed,5.01
-2026-03-19T17:16:55.891618,123456,food organics,food_waste,open,0
-2026-03-19T17:17:00.900237,123456,food organics,food_waste,closed,5.01
-2026-03-19T17:18:57.986585,123456,glass,recycling,open,0
-2026-03-19T17:19:02.993920,123456,glass,recycling,closed,5.01
-2026-03-20T00:03:07.782818,123457,vegetation,food_waste,open,0
-2026-03-20T00:05:32.770150,123457,glass,recycling,open,0
-2026-03-20T00:06:00.685618,123457,glass,recycling,open,0
-2026-03-20T00:06:07.081688,123457,plastic,recycling,open,0
-2026-03-20T00:06:32.764045,123457,paper,recycling,open,0
-2026-03-20T00:07:25.373240,123457,glass,recycling,open,0
-2026-03-20T00:07:31.136425,123457,glass,recycling,open,0
-2026-03-20T00:13:19.107858,123457,glass,recycling,open,0
-2026-03-20T00:19:06.672552,123457,glass,recycling,open,0
-2026-03-20T00:19:11.681279,123457,glass,recycling,closed,5.01
-2026-03-20T00:19:28.367285,123457,cardboard,recycling,open,0
-2026-03-20T00:19:33.372462,123457,cardboard,recycling,closed,5.0
-2026-03-20T00:19:42.256982,123457,cardboard,recycling,open,0
-2026-03-20T00:19:47.264848,123457,cardboard,recycling,closed,5.01
-2026-03-20T00:19:56.320961,123457,cardboard,recycling,open,0
-2026-03-20T00:20:01.328543,123457,cardboard,recycling,closed,5.01
-2026-03-20T00:20:16.718609,123457,metal,recycling,open,0
-2026-03-20T00:20:21.726321,123457,metal,recycling,closed,5.01
-2026-03-20T00:20:41.050984,123457,food organics,food_waste,open,0
-2026-03-20T00:20:46.053362,123457,food organics,food_waste,closed,5.0
-2026-03-20T00:21:14.158736,123457,plastic,recycling,open,0
-2026-03-20T00:21:19.392097,123457,plastic,recycling,closed,5.0
-2026-03-20T00:30:49.712915,123456,plastic,recycling,open,0
-2026-03-20T00:30:54.722462,123456,plastic,recycling,closed,5.01
-2026-03-20T00:31:14.368956,123456,food organics,food_waste,open,0
-2026-03-20T00:31:19.376926,123456,food organics,food_waste,closed,5.01
-2026-03-20T00:31:21.370397,123456,food organics,food_waste,open,0
-2026-03-20T00:31:26.378660,123456,food organics,food_waste,closed,5.01
-2026-03-20T00:31:28.442174,123456,food organics,food_waste,open,0
-2026-03-20T00:31:33.450535,123456,food organics,food_waste,closed,5.01
-2026-03-20T00:31:35.455362,123456,food organics,food_waste,open,0
-2026-03-20T00:31:40.463549,123456,food organics,food_waste,closed,5.01
-2026-03-20T00:31:42.623139,123456,food organics,food_waste,open,0
-2026-03-20T00:31:47.631230,123456,food organics,food_waste,closed,5.01
-2026-03-20T00:31:49.709908,123456,food organics,food_waste,open,0
-2026-03-20T00:32:02.242780,123456,paper,recycling,open,0
-2026-03-20T00:32:07.247571,123456,paper,recycling,closed,5.0
-2026-03-20T00:32:28.213640,123456,glass,recycling,open,0
-2026-03-20T00:32:33.220590,123456,glass,recycling,closed,5.01
-2026-03-20T00:55:10.425028,123456,metal,recycling,open,0
-2026-03-20T00:55:15.429530,123456,metal,recycling,closed,5.0
-2026-03-20T00:55:22.274862,123456,cardboard,recycling,open,0
-2026-03-20T00:55:31.341823,123456,glass,recycling,open,0
-2026-03-20T00:55:36.350631,123456,glass,recycling,closed,5.01
-2026-03-20T00:55:48.755304,123456,metal,recycling,open,0
-2026-03-20T00:55:53.763473,123456,metal,recycling,closed,5.01
-2026-03-20T00:55:55.748172,123456,metal,recycling,open,0
-2026-03-20T00:56:00.756151,123456,metal,recycling,closed,5.01
-2026-03-20T00:56:03.042851,123456,metal,recycling,open,0
-2026-03-20T00:56:08.050122,123456,metal,recycling,closed,5.01
-2026-03-20T00:56:10.016403,123456,metal,recycling,open,0
-2026-03-20T00:56:15.024621,123456,metal,recycling,closed,5.01
-2026-03-20T00:56:16.997465,123456,metal,recycling,open,0
-2026-03-20T00:56:22.005663,123456,metal,recycling,closed,5.01
-2026-03-20T00:56:23.993921,123456,metal,recycling,open,0
-2026-03-20T00:56:29.000795,123456,metal,recycling,closed,5.01
-2026-03-20T00:56:31.049789,123456,metal,recycling,open,0
-2026-03-20T00:56:36.057467,123456,metal,recycling,closed,5.01
-2026-03-20T00:56:38.071461,123456,metal,recycling,open,0
-2026-03-20T00:56:43.074828,123456,metal,recycling,closed,5.0
-2026-03-20T00:56:45.092432,123456,metal,recycling,open,0
-2026-03-20T00:56:50.100069,123456,metal,recycling,closed,5.01
-2026-03-20T00:56:52.207838,123456,metal,recycling,open,0
-2026-03-20T00:56:57.215605,123456,metal,recycling,closed,5.01
-2026-03-20T00:56:59.316057,123456,metal,recycling,open,0
-2026-03-20T00:57:04.321522,123456,metal,recycling,closed,5.0
-2026-03-20T00:57:06.501116,123456,metal,recycling,open,0
-2026-03-20T00:57:11.503077,123456,metal,recycling,closed,5.0
-2026-03-20T00:57:13.612292,123456,metal,recycling,open,0
-2026-03-20T00:57:18.620728,123456,metal,recycling,closed,5.01
-2026-03-20T00:57:20.840687,123456,metal,recycling,open,0
-2026-03-20T00:58:15.838587,123456,vegetation,food_waste,open,0
-2026-03-20T00:58:20.848073,123456,vegetation,food_waste,closed,5.01
-2026-03-20T00:58:34.864422,123456,plastic,recycling,open,0
-2026-03-20T00:58:39.872711,123456,plastic,recycling,closed,5.01
-2026-03-20T00:58:41.813052,123456,plastic,recycling,open,0
-2026-03-20T00:58:46.821217,123456,plastic,recycling,closed,5.01
-2026-03-20T00:58:48.809317,123456,plastic,recycling,open,0
-2026-03-20T00:58:53.817214,123456,plastic,recycling,closed,5.01
-2026-03-20T00:58:55.891499,123456,plastic,recycling,open,0
-2026-03-20T00:59:00.899113,123456,plastic,recycling,closed,5.01
-2026-03-20T00:59:02.865981,123456,plastic,recycling,open,0
-2026-03-20T00:59:07.870455,123456,plastic,recycling,closed,5.0
-2026-03-20T00:59:09.920189,123456,plastic,recycling,open,0
-2026-03-20T00:59:14.928707,123456,plastic,recycling,closed,5.01
-2026-03-20T00:59:16.988855,123456,plastic,recycling,open,0
-2026-03-20T00:59:21.992595,123456,plastic,recycling,closed,5.0
-2026-03-20T00:59:24.124160,123456,plastic,recycling,open,0
-2026-03-20T00:59:37.639300,123456,glass,recycling,open,0
-2026-03-20T00:59:42.642097,123456,glass,recycling,closed,5.0
-2026-03-20T01:03:28.150757,123456,glass,recycling,open,0
-2026-03-20T01:03:33.160107,123456,glass,recycling,closed,5.01
-2026-03-20T01:05:35.743952,123456,metal,recycling,open,0
-2026-03-20T01:05:40.753024,123456,metal,recycling,closed,5.01
-2026-03-20T01:05:54.190526,123456,metal,recycling,open,0
-2026-03-20T01:05:59.197330,123456,metal,recycling,closed,5.01
-2026-03-20T01:06:21.736736,123456,food organics,food_waste,open,0
-2026-03-20T01:06:26.742678,123456,food organics,food_waste,closed,5.0
-2026-03-20T01:12:51.519217,123456,glass,recycling,open,0
-2026-03-20T01:12:56.523134,123456,glass,recycling,closed,5.0
-2026-03-20T01:16:12.045665,123456,glass,recycling,open,0
-2026-03-20T01:16:17.054965,123456,glass,recycling,closed,5.01
-2026-03-20T01:20:04.781946,123456,plastic,recycling,open,0
-2026-03-20T01:20:09.784417,123456,plastic,recycling,closed,5.0
-2026-03-20T01:24:35.870090,123456,glass,recycling,open,0
-2026-03-20T01:24:40.879052,123456,glass,recycling,closed,5.01
-2026-03-20T01:53:08.590243,123457,glass,recycling,open,0
-2026-03-20T01:53:13.599014,123457,glass,recycling,closed,5.01
-2026-03-20T01:53:41.736377,123457,plastic,recycling,open,0
-2026-03-20T01:53:46.740791,123457,plastic,recycling,closed,5.0
-2026-03-20T01:53:47.834565,123457,plastic,recycling,open,0
-2026-03-20T01:53:52.843645,123457,plastic,recycling,closed,5.01
-2026-03-20T01:53:54.007738,123457,plastic,recycling,open,0
-2026-03-20T01:53:59.014894,123457,plastic,recycling,closed,5.01
-2026-03-20T01:54:00.257880,123457,plastic,recycling,open,0
-2026-03-20T01:54:08.221220,123457,glass,recycling,open,0
-2026-03-20T01:54:13.229326,123457,glass,recycling,closed,5.01
-2026-03-20T02:02:04.222539,123456,glass,recycling,open,0
-2026-03-20T02:02:09.229968,123456,glass,recycling,closed,5.01
-2026-03-20T02:02:11.386138,123456,glass,recycling,open,0
-2026-03-20T02:02:16.394463,123456,glass,recycling,closed,5.01
-2026-03-20T02:02:18.527866,123456,glass,recycling,open,0
-2026-03-20T02:02:32.420927,123456,food organics,food_waste,open,0
-2026-03-20T02:02:37.427175,123456,food organics,food_waste,closed,5.01
-2026-03-20T02:02:39.592580,123456,food organics,food_waste,open,0
-2026-03-20T02:02:44.598649,123456,food organics,food_waste,closed,5.0
-2026-03-20T02:02:46.688519,123456,food organics,food_waste,open,0
-2026-03-20T02:02:51.696376,123456,food organics,food_waste,closed,5.01
-2026-03-20T02:02:53.674007,123456,food organics,food_waste,open,0
-2026-03-20T02:02:58.681938,123456,food organics,food_waste,closed,5.01
-2026-03-20T02:03:00.715126,123456,food organics,food_waste,open,0
-2026-03-20T02:03:05.723379,123456,food organics,food_waste,closed,5.01
-2026-03-20T02:03:07.812226,123456,food organics,food_waste,open,0
-2026-03-20T02:03:12.820017,123456,food organics,food_waste,closed,5.01
-2026-03-20T02:03:14.972285,123456,food organics,food_waste,open,0
-2026-03-20T02:03:19.975912,123456,food organics,food_waste,closed,5.0
-2026-03-20T02:03:22.137836,123456,food organics,food_waste,open,0
-2026-03-20T02:03:27.146189,123456,food organics,food_waste,closed,5.01
-2026-03-20T02:03:29.319377,123456,food organics,food_waste,open,0
-2026-03-20T02:03:34.325937,123456,food organics,food_waste,closed,5.01
-2026-03-20T02:03:36.402916,123456,food organics,food_waste,open,0
-2026-03-20T02:03:41.410358,123456,food organics,food_waste,closed,5.01
-2026-03-20T02:03:43.583405,123456,food organics,food_waste,open,0
-2026-03-20T02:03:48.591171,123456,food organics,food_waste,closed,5.01
-2026-03-20T02:03:50.694481,123456,food organics,food_waste,open,0
-2026-03-20T02:03:55.702493,123456,food organics,food_waste,closed,5.01
-2026-03-20T02:03:57.784942,123456,food organics,food_waste,open,0
-2026-03-20T02:04:02.792373,123456,food organics,food_waste,closed,5.01
-2026-03-20T02:04:04.913449,123456,food organics,food_waste,open,0
-2026-03-20T02:04:09.918364,123456,food organics,food_waste,closed,5.0
-2026-03-20T02:04:12.026044,123456,food organics,food_waste,open,0
-2026-03-20T02:04:17.034033,123456,food organics,food_waste,closed,5.01
-2026-03-20T02:04:19.142373,123456,food organics,food_waste,open,0
-2026-03-20T02:04:24.148909,123456,food organics,food_waste,closed,5.01
-2026-03-20T02:04:26.153759,123456,food organics,food_waste,open,0
-2026-03-20T02:04:31.162188,123456,food organics,food_waste,closed,5.01
-2026-03-20T02:04:33.262898,123456,food organics,food_waste,open,0
-2026-03-20T02:04:38.270977,123456,food organics,food_waste,closed,5.01
-2026-03-20T02:04:40.408508,123456,food organics,food_waste,open,0
-2026-03-20T02:04:45.416675,123456,food organics,food_waste,closed,5.01
-2026-03-20T02:04:47.749688,123456,food organics,food_waste,open,0
-2026-03-20T02:04:52.816036,123456,food organics,food_waste,closed,5.07
-2026-03-20T02:04:55.124111,123456,food organics,food_waste,open,0
-2026-03-20T02:05:00.130483,123456,food organics,food_waste,closed,5.01
-2026-03-20T02:05:02.391572,123456,food organics,food_waste,open,0
-2026-03-20T02:05:26.581157,123456,cardboard,recycling,open,0
-2026-03-20T02:05:31.588614,123456,cardboard,recycling,closed,5.01
-2026-03-20T02:05:43.151141,123456,glass,recycling,open,0
-2026-03-20T02:05:48.159191,123456,glass,recycling,closed,5.01
-2026-03-20T02:06:11.120587,123456,food organics,food_waste,open,0
-2026-03-20T02:06:16.128465,123456,food organics,food_waste,closed,5.01
-2026-03-20T02:06:23.445527,123456,food organics,food_waste,open,0
-2026-03-20T02:06:28.453597,123456,food organics,food_waste,closed,5.01
-2026-03-20T02:11:11.091526,123456,glass,recycling,open,0
-2026-03-20T02:11:16.102242,123456,glass,recycling,closed,5.01
-2026-03-20T02:11:21.522377,123456,glass,recycling,open,0
-2026-03-20T02:11:26.528434,123456,glass,recycling,closed,5.0
-2026-03-20T02:11:43.629370,123456,plastic,recycling,open,0
-2026-03-20T02:11:48.635680,123456,plastic,recycling,closed,5.01
-2026-03-20T02:11:58.871622,123456,plastic,recycling,open,0
-2026-03-20T02:12:03.879708,123456,plastic,recycling,closed,5.01
-2026-03-20T02:13:55.106940,123456,glass,recycling,open,0
-2026-03-20T02:14:00.116042,123456,glass,recycling,closed,5.01
-2026-03-20T02:14:20.710471,123456,plastic,recycling,open,0
-2026-03-20T02:14:25.718381,123456,plastic,recycling,closed,5.01
-2026-03-20T02:15:36.339581,123456,glass,recycling,open,0
-2026-03-20T02:15:41.347982,123456,glass,recycling,closed,5.01
-2026-03-20T02:15:53.998773,123456,food organics,food_waste,open,0
-2026-03-20T02:15:59.007390,123456,food organics,food_waste,closed,5.01
-2026-03-20T02:16:30.329434,123456,glass,recycling,open,0
-2026-03-20T02:16:35.333880,123456,glass,recycling,closed,5.0
-2026-03-20T02:16:57.878892,123456,glass,recycling,open,0
-2026-03-20T02:17:02.886584,123456,glass,recycling,closed,5.01
-2026-03-20T02:19:10.840764,123456,miscellaneous trash,other,open,0
-2026-03-20T02:19:15.848881,123456,miscellaneous trash,other,closed,5.01
-2026-03-20T02:24:51.334399,123456,metal,recycling,open,0
-2026-03-20T02:24:56.343288,123456,metal,recycling,closed,5.01
-2026-03-20T02:45:25.564437,123456,metal,recycling,open,0
-2026-03-20T02:45:30.569403,123456,metal,recycling,closed,5.0
-2026-03-20T02:57:46.807171,123456,glass,recycling,open,0
-2026-03-20T02:57:51.816654,123456,glass,recycling,closed,5.01
-2026-03-20T03:02:16.883546,123456,glass,recycling,open,0
-2026-03-20T03:02:21.961729,123456,glass,recycling,closed,5.08
-2026-03-20T03:02:42.792350,123456,glass,recycling,open,0
-2026-03-20T03:02:47.801046,123456,glass,recycling,closed,5.01
-2026-03-20T03:09:11.517032,123456,vegetation,food_waste,open,0
-2026-03-20T03:09:16.533628,123456,vegetation,food_waste,closed,5.01
-2026-03-20T03:09:44.012641,123456,glass,recycling,open,0
-2026-03-20T03:09:49.019266,123456,glass,recycling,closed,5.01
-2026-03-20T03:11:02.917313,123456,metal,recycling,open,0
-2026-03-20T03:11:07.924880,123456,metal,recycling,closed,5.01
-2026-03-20T03:17:48.842320,123456,glass,recycling,open,0
-2026-03-20T03:17:53.851202,123456,glass,recycling,closed,5.01
-2026-03-20T03:20:55.881922,123456,cardboard,recycling,open,0
-2026-03-20T03:21:00.890743,123456,cardboard,recycling,closed,5.01
-2026-03-20T03:21:15.521843,123456,miscellaneous trash,other,open,0
-2026-03-20T03:21:20.530628,123456,miscellaneous trash,other,closed,5.01
-2026-03-20T03:27:37.508894,123456,miscellaneous trash,other,open,0
-2026-03-20T03:27:42.530510,123456,miscellaneous trash,other,closed,5.0
-2026-03-20T03:32:05.808763,123456,miscellaneous trash,other,open,0
-2026-03-20T03:33:05.815760,123456,miscellaneous trash,other,closed,60.01
+2026-03-20T11:51:09.384930,123456,plastic,recycling,open,0
+2026-03-20T11:52:09.389199,123456,plastic,recycling,closed,60.0
+2026-03-20T11:52:24.549169,123456,miscellaneous trash,other,open,0
+2026-03-20T11:53:24.556859,123456,miscellaneous trash,other,closed,60.01
+2026-03-20T12:04:09.862403,wkwk123,food organics,food_waste,open,0
+2026-03-20T12:05:09.870894,wkwk123,food organics,food_waste,closed,60.01
+2026-03-20T12:27:18.633037,wkwk123,glass,recycling,open,0
+2026-03-20T12:28:18.640429,wkwk123,glass,recycling,closed,60.01
+2026-03-20T12:28:41.875273,wkwk123,food organics,food_waste,open,0
+2026-03-20T12:29:41.883487,wkwk123,food organics,food_waste,closed,60.01
+2026-03-20T12:33:04.915225,wkwk123,metal,recycling,open,0
+2026-03-20T12:34:04.918618,wkwk123,metal,recycling,closed,60.0
+2026-03-20T14:17:17.305095,123456,Vegetation,food_waste,open,0
+2026-03-20T14:18:17.314071,123456,Vegetation,food_waste,closed,60.01
+2026-03-20T14:27:16.451289,123456,Printer,harmful,open,0
+2026-03-20T14:28:16.458923,123456,Printer,harmful,closed,60.01
+2026-03-20T14:31:55.665392,123456,Printer,harmful,open,0
+2026-03-20T14:32:55.670811,123456,Printer,harmful,closed,60.0
+2026-03-20T14:34:11.604812,123456,Computer,harmful,open,0
+2026-03-20T14:35:11.607179,123456,Computer,harmful,closed,60.0
+2026-03-20T14:36:29.229560,123456,FoodScraps,food_waste,open,0
+2026-03-20T14:37:51.111627,123456,Metal,recycling,open,0
+2026-03-20T14:38:48.102104,123456,SanitaryNapkin,other,open,0
+2026-03-20T14:39:48.109122,123456,SanitaryNapkin,other,closed,60.0
+2026-03-20T14:40:27.802009,123456,Metal,recycling,open,0
+2026-03-20T14:41:27.809498,123456,Metal,recycling,closed,60.01
+2026-03-20T14:42:44.587757,123456,Bulb,harmful,open,0
+2026-03-20T14:43:44.596032,123456,Bulb,harmful,closed,60.01
+2026-03-20T14:44:56.081672,123456,SanitaryNapkin,other,open,0
+2026-03-20T14:45:56.087680,123456,SanitaryNapkin,other,closed,60.0
+2026-03-20T14:46:07.569141,123456,Straw,other,open,0
+2026-03-20T14:47:07.577225,123456,Straw,other,closed,60.01
+2026-03-20T14:51:11.237465,123456,Straw,other,open,0
+2026-03-20T14:52:11.245033,123456,Straw,other,closed,60.01
+2026-03-20T14:54:10.205871,123456,other,other,open,0
+2026-03-20T14:55:10.214335,123456,other,other,closed,60.01
+2026-03-20T14:56:22.170964,123456,Vegetation,food_waste,open,0
+2026-03-20T14:57:22.178705,123456,Vegetation,food_waste,closed,60.01
+2026-03-20T15:00:53.813397,123456,Straw,other,open,0
+2026-03-20T15:01:53.818851,123456,Straw,other,closed,60.0
+2026-03-20T15:07:57.077651,123456,FoodScraps,food_waste,open,0
+2026-03-20T15:08:57.085471,123456,FoodScraps,food_waste,closed,60.01
+2026-03-20T15:09:18.445353,123456,Cardboard,recycling,open,0
+2026-03-20T15:10:18.453029,123456,Cardboard,recycling,closed,60.01
+2026-03-20T15:10:52.043441,123456,Cardboard,recycling,open,0
+2026-03-20T15:11:52.051429,123456,Cardboard,recycling,closed,60.01
+2026-03-20T15:12:24.067135,123456,PlasticBottle,recycling,open,0
+2026-03-20T15:13:24.075457,123456,PlasticBottle,recycling,closed,60.01
+2026-03-20T15:15:19.994520,123456,Metal,recycling,open,0
+2026-03-20T15:16:19.999467,123456,Metal,recycling,closed,60.0
+2026-03-20T15:18:00.973512,123456,FoodScraps,food_waste,open,0
+2026-03-20T15:18:10.977748,123456,FoodScraps,food_waste,closed,10.0
+2026-03-20T15:18:29.687445,123456,Vegetation,food_waste,open,0
+2026-03-20T15:18:39.693325,123456,Vegetation,food_waste,closed,10.0
+2026-03-20T15:19:02.913184,123456,Cardboard,recycling,open,0
+2026-03-20T15:19:12.918216,123456,Cardboard,recycling,closed,10.0
+2026-03-20T15:19:40.769824,123456,DirtyItems,other,open,0
+2026-03-20T15:19:50.773904,123456,DirtyItems,other,closed,10.0
+2026-03-20T15:20:26.020963,123456,PlasticBottle,recycling,open,0
+2026-03-20T15:20:36.024400,123456,PlasticBottle,recycling,closed,10.0
+2026-03-20T15:20:48.429941,123456,Cardboard,recycling,open,0
+2026-03-20T15:20:58.437966,123456,Cardboard,recycling,closed,10.01
+2026-03-20T15:21:39.302620,123456,GlassContainer,recycling,open,0
+2026-03-20T15:21:49.310877,123456,GlassContainer,recycling,closed,10.01
+2026-03-20T15:21:59.033129,123456,GlassContainer,recycling,open,0
+2026-03-20T15:22:09.039946,123456,GlassContainer,recycling,closed,10.01
+2026-03-20T15:22:22.834670,123456,KitchenWaste,food_waste,open,0
+2026-03-20T15:22:32.842735,123456,KitchenWaste,food_waste,closed,10.01
+2026-03-20T15:22:49.402823,123456,Vegetation,food_waste,open,0
+2026-03-20T15:22:59.411302,123456,Vegetation,food_waste,closed,10.01
+2026-03-20T15:23:08.089749,123456,Paper,recycling,open,0
+2026-03-20T15:23:18.094379,123456,Paper,recycling,closed,10.0
+2026-03-20T15:23:37.748973,123456,GlassContainer,recycling,open,0
+2026-03-20T15:23:47.757106,123456,GlassContainer,recycling,closed,10.01
+2026-03-20T15:23:58.846855,123456,Paper,recycling,open,0
+2026-03-20T15:24:08.854974,123456,Paper,recycling,closed,10.01
+2026-03-20T15:24:18.214549,123456,Paper,recycling,open,0
+2026-03-20T15:24:28.222973,123456,Paper,recycling,closed,10.01
+2026-03-20T15:24:40.246216,123456,Metal,recycling,open,0
+2026-03-20T15:24:50.255924,123456,Metal,recycling,closed,10.01
+2026-03-20T15:25:15.698167,123456,Textile,recycling,open,0
+2026-03-20T15:25:25.706112,123456,Textile,recycling,closed,10.01
+2026-03-20T15:25:37.256141,123456,Cardboard,recycling,open,0
+2026-03-20T15:25:47.264802,123456,Cardboard,recycling,closed,10.01
+2026-03-20T15:26:39.133874,123456,Metal,recycling,open,0
+2026-03-20T15:26:49.140241,123456,Metal,recycling,closed,10.0
+2026-03-20T15:26:56.744262,123456,Metal,recycling,open,0
+2026-03-20T15:27:06.752416,123456,Metal,recycling,closed,10.01
+2026-03-20T15:27:23.381968,123456,Metal,recycling,open,0
+2026-03-20T15:27:33.385778,123456,Metal,recycling,closed,10.0
+2026-03-20T15:35:56.810928,123456,Metal,recycling,open,0
+2026-03-20T15:36:06.818158,123456,Metal,recycling,closed,10.01
+2026-03-20T15:36:44.840093,123456,Metal,recycling,open,0
+2026-03-20T15:36:54.846022,123456,Metal,recycling,closed,10.0
+2026-03-20T15:38:22.153928,123456,Metal,recycling,open,0
+2026-03-20T15:38:32.162304,123456,Metal,recycling,closed,10.01
+2026-03-20T15:39:05.840538,123456,Metal,recycling,open,0
+2026-03-20T15:39:15.845651,123456,Metal,recycling,closed,10.0
+2026-03-20T15:40:06.928458,4ca0cfe3a5a8416624e2bf7518cf118cd6baa131def07c61f4b9419f7e3dbbd1,Metal,recycling,open,0
+2026-03-20T15:40:16.935931,4ca0cfe3a5a8416624e2bf7518cf118cd6baa131def07c61f4b9419f7e3dbbd1,Metal,recycling,closed,10.0
+2026-03-20T15:43:07.716333,wkwk123,Metal,recycling,open,0
+2026-03-20T15:43:17.724214,wkwk123,Metal,recycling,closed,10.01
+2026-03-20T15:44:01.235393,wkwk123,Metal,recycling,open,0
+2026-03-20T15:44:11.243580,wkwk123,Metal,recycling,closed,10.01

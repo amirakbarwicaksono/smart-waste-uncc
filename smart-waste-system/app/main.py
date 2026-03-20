@@ -88,6 +88,7 @@
 
 # st.divider()
 # st.caption("📌 Select a page from the sidebar to get started")
+
 import sys
 import os
 import streamlit as st
@@ -163,5 +164,5 @@ st.divider()
 # REFRESH LOGIC
 # Hanya rerun jika latest_user_id kosong (sedang menunggu kartu)
 if st.session_state.latest_user_id is None:
-    time.sleep(1.0)
+    time.sleep(0.5)
     st.rerun()
