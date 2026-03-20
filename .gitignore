@@ -10,6 +10,7 @@ __pycache__/
 *$py.class
 *.so
 .Python
+.onnx
 
 # TensorFlow models
 models/*.h5
