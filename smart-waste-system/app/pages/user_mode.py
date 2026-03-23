@@ -1274,6 +1274,209 @@
 #         time.sleep(1.0) # Refresh timer setiap detik
 #         st.rerun()
 
+# import sys
+# import os
+# import streamlit as st
+# import pandas as pd
+# from datetime import datetime
+# import time
+# from PIL import Image
+
+# # Setup Path agar bisa import core module
+# sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
+
+# from core.barcode.scanner import scan_barcode
+# from core.pipeline.processor import process_waste
+# from core.classification.predictor import predict_image
+# from core.mqtt.client import publish
+# from core.mqtt.listener import get_listener, get_messages
+
+# # =============================
+# # STREAMLIT CONFIG
+# # =============================
+# st.set_page_config(
+#     page_title="Smart Waste User Mode", 
+#     page_icon="👤", 
+#     layout="wide"
+# )
+
+# # =============================
+# # INITIALIZE SESSION STATE
+# # =============================
+# if "state" not in st.session_state:
+#     st.session_state.state = {
+#         "active_user": None,
+#         "session_active": False,
+#         "last_activity": None,
+#         "timeout_seconds": 100,
+#         "last_result": None,
+#         "processed": False,
+#         "refresh_rate": 2.0, 
+#         "uploader_key": 0
+#     }
+
+# if 'latest_user_id' not in st.session_state:
+#     st.session_state.latest_user_id = None
+
+# def reset_session():
+#     st.session_state.state.update({
+#         "active_user": None,
+#         "session_active": False,
+#         "last_activity": None,
+#         "last_result": None,
+#         "processed": False,
+#         "uploader_key": st.session_state.state["uploader_key"] + 1
+#     })
+#     st.session_state.latest_user_id = None
+
+# # =============================
+# # MQTT SYNC LOGIC
+# # =============================
+# def sync_mqtt_in_user_mode():
+#     """Memeriksa pesan MQTT baru untuk auto-login."""
+#     get_listener() 
+#     new_messages = get_messages()
+#     for msg in new_messages:
+#         if 'user_id' in msg:
+#             st.session_state.latest_user_id = msg['user_id']
+#             print(f"📥 New MQTT Login detected: {msg['user_id']}")
+
+# sync_mqtt_in_user_mode()
+
+# # AUTO LOGIN LOGIC
+# if st.session_state.latest_user_id and not st.session_state.state["session_active"]:
+#     st.session_state.state["active_user"] = st.session_state.latest_user_id
+#     st.session_state.state["session_active"] = True
+#     st.session_state.state["last_activity"] = datetime.now()
+#     st.session_state.latest_user_id = None 
+#     st.rerun()
+
+# # =============================
+# # HEADER & SIDEBAR
+# # =============================
+# st.header("👤 User Mode")
+
+# with st.sidebar:
+#     st.header("⚙️ Settings")
+#     st.session_state.state["refresh_rate"] = st.slider("Auto Refresh (s)", 0.5, 5.0, 2.0)
+#     st.metric("Status", "✅ Active" if st.session_state.state["session_active"] else "❌ Waiting")
+    
+#     if st.button("🔄 Exit to Main"):
+#         reset_session()
+#         st.switch_page("main.py")
+
+# # =============================
+# # MAIN LOGIC FLOW
+# # =============================
+
+# # KONDISI A: BELUM LOGIN
+# if not st.session_state.state["session_active"]:
+#     st.subheader("Step 1: Scan Barcode or Wait for Card")
+    
+#     col_scan, col_info = st.columns([1, 1])
+#     with col_scan:
+#         barcode_input = scan_barcode()
+#         if barcode_input:
+#             st.session_state.state["active_user"] = barcode_input
+#             st.session_state.state["session_active"] = True
+#             st.session_state.state["last_activity"] = datetime.now()
+#             st.rerun()
+            
+#     with col_info:
+#         st.info("⏳ **Waiting...**\n\nScan your barcode or tap your card to begin.")
+    
+#     # Refresh otomatis agar MQTT tetap terpantau saat logout
+#     time.sleep(st.session_state.state["refresh_rate"])
+#     st.rerun()
+
+# # KONDISI B: SESI AKTIF
+# else:
+#     # 1. Check Timeout
+#     elapsed = (datetime.now() - st.session_state.state["last_activity"]).total_seconds()
+#     remaining = max(0, st.session_state.state["timeout_seconds"] - elapsed)
+
+#     if remaining <= 0:
+#         publish("smartwaste/user/timeout", {"user_id": st.session_state.state["active_user"], "reason": "timeout"})
+#         reset_session()
+#         st.warning("⏱️ Session Ended (Timeout). Redirecting...")
+#         time.sleep(2)
+#         st.switch_page("main.py")
+
+#     # 2. User Info & Timer
+#     col_user, col_timer, col_out = st.columns([2, 2, 1])
+#     col_user.info(f"👤 **User:** {st.session_state.state['active_user']}")
+#     col_timer.progress(remaining / st.session_state.state["timeout_seconds"], text=f"⏱️ {int(remaining)}s remaining")
+    
+#     if col_out.button("🚪 Logout", use_container_width=True):
+#         reset_session()
+#         st.switch_page("main.py")
+
+#     st.divider()
+
+#     # 3. Waste Identification
+#     st.subheader("Step 2: Waste Identification")
+    
+#     img_file = None # Inisialisasi awal
+
+#     if not st.session_state.state["processed"]:
+#         method = st.radio("Method:", ["📷 Camera", "📁 Upload"], horizontal=True)
+
+#         if method == "📷 Camera":
+#             img_file = st.camera_input("Take a photo", key=f"cam_{st.session_state.state['uploader_key']}")
+#         else:
+#             img_file = st.file_uploader("Upload image", type=['jpg', 'jpeg', 'png'], key=f"file_{st.session_state.state['uploader_key']}")
+
+#         # PROSES JIKA FILE MASUK
+#         if img_file is not None:
+#             # Update activity agar tidak timeout saat AI bekerja
+#             st.session_state.state["last_activity"] = datetime.now()
+            
+#             with st.status("🛠️ Processing Waste...", expanded=True) as status:
+#                 img = Image.open(img_file)
+#                 st.write("🔍 Analyzing image (AI)...")
+#                 waste_type, bin_type = predict_image(img)
+                
+#                 st.write(f"📦 Opening {bin_type} bin...")
+#                 _, _, duration = process_waste(
+#                     st.session_state.state["active_user"], 
+#                     img, 
+#                     waste_type=waste_type, 
+#                     bin_type=bin_type
+#                 )
+                
+#                 st.session_state.state["last_result"] = {
+#                     "waste": waste_type,
+#                     "bin": bin_type,
+#                     "duration": duration
+#                 }
+#                 st.session_state.state["processed"] = True
+#                 status.update(label="✅ Success!", state="complete")
+            
+#             # Rerun sekali untuk menampilkan hasil sukses
+#             st.rerun()
+
+#     else:
+#         # TAMPILKAN HASIL
+#         if st.session_state.state["last_result"]:
+#             res = st.session_state.state["last_result"]
+#             st.success(f"### Success!\nType: **{res['waste']}** | Bin: **{res['bin']}** | Time: **{res['duration']:.1f}s**")
+            
+#             if st.button("♻️ Dispose More Waste", type="primary"):
+#                 st.session_state.state["processed"] = False
+#                 st.session_state.state["last_result"] = None
+#                 st.session_state.state["uploader_key"] += 1 
+#                 st.session_state.state["last_activity"] = datetime.now()
+#                 st.rerun()
+
+#     # =============================
+#     # SMART REFRESH LOGIC
+#     # =============================
+#     # Jangan refresh jika: sudah diproses ATAU sedang ada file di uploader
+#     if not st.session_state.state["processed"] and img_file is None:
+#         time.sleep(0.5) # Refresh timer setiap detik
+#         st.rerun()
+#code atas work sebelumnya
+
 import sys
 import os
 import streamlit as st
@@ -1305,7 +1508,8 @@ st.set_page_config(
 # =============================
 if "state" not in st.session_state:
     st.session_state.state = {
-        "active_user": None,
+        "active_user_id": None,           # user_id untuk tampilan (wkwk123)
+        "active_user_hash": None,         # userHashId untuk database dan MQTT
         "session_active": False,
         "last_activity": None,
         "timeout_seconds": 100,
@@ -1317,10 +1521,17 @@ if "state" not in st.session_state:
 
 if 'latest_user_id' not in st.session_state:
     st.session_state.latest_user_id = None
+    
+if 'latest_user_hash' not in st.session_state:
+    st.session_state.latest_user_hash = None
+    
+if 'latest_user_name' not in st.session_state:
+    st.session_state.latest_user_name = None
 
 def reset_session():
     st.session_state.state.update({
-        "active_user": None,
+        "active_user_id": None,
+        "active_user_hash": None,
         "session_active": False,
         "last_activity": None,
         "last_result": None,
@@ -1328,6 +1539,8 @@ def reset_session():
         "uploader_key": st.session_state.state["uploader_key"] + 1
     })
     st.session_state.latest_user_id = None
+    st.session_state.latest_user_hash = None
+    st.session_state.latest_user_name = None
 
 # =============================
 # MQTT SYNC LOGIC
@@ -1337,18 +1550,42 @@ def sync_mqtt_in_user_mode():
     get_listener() 
     new_messages = get_messages()
     for msg in new_messages:
-        if 'user_id' in msg:
-            st.session_state.latest_user_id = msg['user_id']
-            print(f"📥 New MQTT Login detected: {msg['user_id']}")
+        if isinstance(msg, dict):
+            # Cek apakah ada userHashId (untuk database) dan user_id (untuk tampilan)
+            if 'userHashId' in msg:
+                st.session_state.latest_user_hash = msg['userHashId']
+                st.session_state.latest_user_name = msg.get('user_id', None)
+                print(f"📥 MQTT Login: Hash={msg['userHashId'][:16]}..., Name={msg.get('user_id', 'N/A')}")
+            elif 'user_id' in msg:
+                st.session_state.latest_user_id = msg['user_id']
+                print(f"📥 MQTT Login: ID={msg['user_id']}")
 
 sync_mqtt_in_user_mode()
 
+# =============================
 # AUTO LOGIN LOGIC
-if st.session_state.latest_user_id and not st.session_state.state["session_active"]:
-    st.session_state.state["active_user"] = st.session_state.latest_user_id
+# =============================
+# Prioritas: Login dengan userHashId (untuk database) dan user_id (untuk tampilan)
+if st.session_state.latest_user_hash and not st.session_state.state["session_active"]:
+    st.session_state.state["active_user_hash"] = st.session_state.latest_user_hash  # Untuk database
+    st.session_state.state["active_user_id"] = st.session_state.latest_user_name     # Untuk tampilan
     st.session_state.state["session_active"] = True
     st.session_state.state["last_activity"] = datetime.now()
-    st.session_state.latest_user_id = None 
+    st.session_state.latest_user_hash = None
+    st.session_state.latest_user_name = None
+    
+    display_name = st.session_state.state["active_user_id"] or st.session_state.state["active_user_hash"][:16] + "..."
+    st.success(f"✅ Auto Check-In via MQTT: {display_name}")
+    st.rerun()
+
+# Prioritas 2: Login dengan user_id (manual barcode)
+elif st.session_state.latest_user_id and not st.session_state.state["session_active"]:
+    st.session_state.state["active_user_id"] = st.session_state.latest_user_id
+    st.session_state.state["active_user_hash"] = None  # Tidak ada hash untuk manual
+    st.session_state.state["session_active"] = True
+    st.session_state.state["last_activity"] = datetime.now()
+    st.session_state.latest_user_id = None
+    st.success(f"✅ Manual Check-In: {st.session_state.latest_user_id}")
     st.rerun()
 
 # =============================
@@ -1360,6 +1597,13 @@ with st.sidebar:
     st.header("⚙️ Settings")
     st.session_state.state["refresh_rate"] = st.slider("Auto Refresh (s)", 0.5, 5.0, 2.0)
     st.metric("Status", "✅ Active" if st.session_state.state["session_active"] else "❌ Waiting")
+    
+    if st.session_state.state["session_active"]:
+        # Tampilkan user_id (wkwk123) di UI
+        display_name = st.session_state.state["active_user_id"] or "Unknown"
+        st.metric("User", display_name)
+        if st.session_state.state["active_user_hash"]:
+            st.caption(f"Hash: {st.session_state.state['active_user_hash'][:16]}...")
     
     if st.button("🔄 Exit to Main"):
         reset_session()
@@ -1377,9 +1621,12 @@ if not st.session_state.state["session_active"]:
     with col_scan:
         barcode_input = scan_barcode()
         if barcode_input:
-            st.session_state.state["active_user"] = barcode_input
+            # Manual login menggunakan barcode
+            st.session_state.state["active_user_id"] = barcode_input
+            st.session_state.state["active_user_hash"] = None
             st.session_state.state["session_active"] = True
             st.session_state.state["last_activity"] = datetime.now()
+            st.success(f"✅ Manual Check-In: {barcode_input}")
             st.rerun()
             
     with col_info:
@@ -1396,18 +1643,32 @@ else:
     remaining = max(0, st.session_state.state["timeout_seconds"] - elapsed)
 
     if remaining <= 0:
-        publish("smartwaste/user/timeout", {"user_id": st.session_state.state["active_user"], "reason": "timeout"})
+        # Kirim timeout dengan userHashId jika ada (untuk database)
+        payload = {
+            "user_id": st.session_state.state["active_user_id"],
+            "user_hash": st.session_state.state["active_user_hash"],
+            "reason": "timeout"
+        }
+        publish("smartwaste/user/timeout", payload)
         reset_session()
         st.warning("⏱️ Session Ended (Timeout). Redirecting...")
         time.sleep(2)
         st.switch_page("main.py")
 
-    # 2. User Info & Timer
+    # 2. User Info & Timer - Tampilkan user_id (wkwk123)
     col_user, col_timer, col_out = st.columns([2, 2, 1])
-    col_user.info(f"👤 **User:** {st.session_state.state['active_user']}")
+    
+    display_name = st.session_state.state["active_user_id"] or "User"
+    col_user.info(f"👤 **User:** {display_name}")
     col_timer.progress(remaining / st.session_state.state["timeout_seconds"], text=f"⏱️ {int(remaining)}s remaining")
     
     if col_out.button("🚪 Logout", use_container_width=True):
+        payload = {
+            "user_id": st.session_state.state["active_user_id"],
+            "user_hash": st.session_state.state["active_user_hash"],
+            "reason": "manual_logout"
+        }
+        publish("smartwaste/user/timeout", payload)
         reset_session()
         st.switch_page("main.py")
 
@@ -1416,7 +1677,7 @@ else:
     # 3. Waste Identification
     st.subheader("Step 2: Waste Identification")
     
-    img_file = None # Inisialisasi awal
+    img_file = None
 
     if not st.session_state.state["processed"]:
         method = st.radio("Method:", ["📷 Camera", "📁 Upload"], horizontal=True)
@@ -1437,8 +1698,11 @@ else:
                 waste_type, bin_type = predict_image(img)
                 
                 st.write(f"📦 Opening {bin_type} bin...")
+                # Kirim user_hash ke process_waste (untuk dicatat di CSV)
+                # user_hash akan menjadi barcode di CSV
+                user_identifier = st.session_state.state["active_user_hash"] or st.session_state.state["active_user_id"]
                 _, _, duration = process_waste(
-                    st.session_state.state["active_user"], 
+                    user_identifier,  # <-- Ini yang akan masuk ke CSV sebagai barcode
                     img, 
                     waste_type=waste_type, 
                     bin_type=bin_type
@@ -1471,7 +1735,6 @@ else:
     # =============================
     # SMART REFRESH LOGIC
     # =============================
-    # Jangan refresh jika: sudah diproses ATAU sedang ada file di uploader
     if not st.session_state.state["processed"] and img_file is None:
-        time.sleep(0.5) # Refresh timer setiap detik
+        time.sleep(0.5)
         st.rerun()

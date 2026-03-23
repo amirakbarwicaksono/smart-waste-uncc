@@ -1,0 +1,6 @@
+timestamp,waste_type,bin_type,confidence,root_category,root_confidence,stage2_model,stage2_confidence,preprocessing_ms,stage1_inference_ms,stage2_inference_ms,total_inference_ms,overall_latency_ms
+2026-03-23T15:06:31.439656,Paper,recycling,0.7266,Recyclable,0.7280,recyclable,0.7266,9.76,660.91,368.41,1029.31,1039.60
+2026-03-23T15:12:51.058433,KitchenWaste,food_waste,0.7294,FoodWaste,0.7293,food,0.7294,13.43,657.80,145.42,803.22,817.01
+2026-03-23T15:17:19.765099,Toys,other,0.7307,Others,0.6202,other,0.7307,11.95,651.57,391.67,1043.23,1055.63
+2026-03-23T15:24:45.540584,DirtyItems,other,0.7173,Others,0.7155,other,0.7173,18.55,633.20,375.55,1008.75,1027.83
+2026-03-23T15:32:12.177511,FoodScraps,food_waste,0.6588,FoodWaste,0.7121,food,0.6588,15.55,657.87,145.57,803.43,819.29
