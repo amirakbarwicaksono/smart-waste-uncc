@@ -21,6 +21,7 @@ models/*.json
 # Dataset
 data/raw/*
 data/processed/*
+models/*
 !data/raw/.gitkeep
 !data/processed/.gitkeep
 
