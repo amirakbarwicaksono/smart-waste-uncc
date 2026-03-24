@@ -11,3 +11,6 @@ timestamp,waste_type,bin_type,confidence,root_category,root_confidence,stage2_mo
 2026-03-23T17:22:22.317955,Paper,recycling,0.7290,Recyclable,0.7296,recyclable,0.7290,20.09,662.70,370.01,1032.70,1054.80
 2026-03-24T11:16:16.067453,Paper,recycling,0.7252,Recyclable,0.7288,recyclable,0.7252,4.74,668.03,370.38,1038.41,1043.56
 2026-03-24T11:18:50.468203,Paper,recycling,0.7290,Recyclable,0.7286,recyclable,0.7290,12.96,665.56,365.40,1030.96,1044.35
+2026-03-24T12:26:17.745289,KitchenWaste,food_waste,0.7223,FoodWaste,0.7282,food,0.7223,39.55,670.28,158.35,828.63,868.48
+2026-03-24T12:59:55.408615,KitchenWaste,food_waste,0.7223,FoodWaste,0.7282,food,0.7223,36.28,666.23,150.91,817.14,853.79
+2026-03-24T13:08:38.289917,KitchenWaste,food_waste,0.7223,FoodWaste,0.7282,food,0.7223,27.05,665.18,150.91,816.09,843.48
