@@ -1514,7 +1514,7 @@ if "state" not in st.session_state:
         "predicted_img": None,
         "weight_status": None,
         "weight_confirmed": False,
-        "processing": False  # Flag untuk proses waste
+        "processing": False
     }
 
 if 'latest_user_id' not in st.session_state:
@@ -1670,7 +1670,7 @@ else:
         st.divider()
         
         # =============================
-        # STEP 3: WEIGHT CONFIRMATION (TANPA INFO BLOCKCHAIN KE USER)
+        # STEP 3: WEIGHT CONFIRMATION
         # =============================
         st.subheader("Step 3: Confirm Disposal")
         st.markdown("**Did sensor actually detect weight?**")
@@ -1694,7 +1694,7 @@ else:
                     st.rerun()
         
         else:
-            # Tampilkan status yang sudah dipilih (tanpa info blockchain)
+            # Tampilkan status yang sudah dipilih
             if st.session_state.state["weight_status"]:
                 st.success("✅ Status: True")
             else:
@@ -1725,21 +1725,42 @@ else:
                 
                 st.rerun()
         
+        # =============================
         # TAMPILKAN HASIL SETELAH PROSES
+        # =============================
         if st.session_state.state["processed"] and st.session_state.state["last_result"]:
             res = st.session_state.state["last_result"]
             st.success(f"✅ Bin closed after {res['duration']:.1f}s")
             
-            if st.button("♻️ Dispose More Waste"):
-                st.session_state.state["predicted_waste"] = None
-                st.session_state.state["predicted_bin"] = None
-                st.session_state.state["predicted_img"] = None
-                st.session_state.state["processed"] = False
-                st.session_state.state["weight_status"] = None
-                st.session_state.state["weight_confirmed"] = False
-                st.session_state.state["processing"] = False
-                st.session_state.state["uploader_key"] += 1
-                st.rerun()
+            col1, col2 = st.columns(2)
+            
+            with col1:
+                if st.button("♻️ Dispose More Waste", type="primary"):
+                    # Publish MQTT untuk disposemore
+                    publish("smartwaste/user/dispose", {
+                        "user_id": st.session_state.state["active_user_id"],
+                        "reason": "disposemore"
+                    })
+                    
+                    # Reset session untuk proses berikutnya
+                    st.session_state.state["predicted_waste"] = None
+                    st.session_state.state["predicted_bin"] = None
+                    st.session_state.state["predicted_img"] = None
+                    st.session_state.state["processed"] = False
+                    st.session_state.state["weight_status"] = None
+                    st.session_state.state["weight_confirmed"] = False
+                    st.session_state.state["processing"] = False
+                    st.session_state.state["uploader_key"] += 1
+                    st.rerun()
+            
+            with col2:
+                if st.button("🚪 Exit to Main"):
+                    publish("smartwaste/user/timeout", {
+                        "user_id": st.session_state.state["active_user_id"],
+                        "reason": "logout"
+                    })
+                    reset_session()
+                    st.switch_page("main.py")
 
     if not st.session_state.state["processed"] and not st.session_state.state["predicted_waste"]:
         time.sleep(0.5)
