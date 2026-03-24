@@ -1,3 +1,6 @@
+## 📝 **Updated README.md**
+
+```markdown
 # ♻️ Smart Waste Management System (SWMS)
 
 A comprehensive IoT-based smart waste management system with AI-powered waste classification, MQTT integration, and blockchain-ready architecture.
@@ -252,3 +255,22 @@ MIT License
 - TensorFlow team for MobileNetV2
 - ONNX Runtime for inference optimization
 - Streamlit for web framework
+```
+
+---
+
+## ✅ **README.md Updates**
+
+| Section | Content |
+|---------|---------|
+| **Features** | AI classification, MQTT, authentication, weight sensor |
+| **Technical Specs** | YOLOv8 ONNX, TensorFlow 2.16, Streamlit |
+| **MQTT Topics** | Subscribe/publish topics with payload formats |
+| **Authentication Flow** | Hash ID priority login |
+| **AI Prediction Flow** | 2-stage hierarchical classification |
+| **Data Logging** | CSV schema with weight_status |
+| **Configuration** | Broker settings, model paths, thresholds |
+| **Performance Metrics** | Latency breakdown |
+| **Troubleshooting** | Common issues and solutions |
+
+**README.md is ready!** 🚀

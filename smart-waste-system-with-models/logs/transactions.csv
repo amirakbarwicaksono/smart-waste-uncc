@@ -1,0 +1,11 @@
+timestamp,barcode,waste_type,bin_type,bin_state,bin_duration_sec
+2026-03-23T15:06:31.440267,4ca0cfe3a5a8416624e2bf7518cf118cd6baa131def07c61f4b9419f7e3dbbd1,Paper,recycling,open,0
+2026-03-23T15:07:01.449109,4ca0cfe3a5a8416624e2bf7518cf118cd6baa131def07c61f4b9419f7e3dbbd1,Paper,recycling,closed,30.01
+2026-03-23T15:12:51.059391,4ca0cfe3a5a8416624e2bf7518cf118cd6baa131def07c61f4b9419f7e3dbbd1,KitchenWaste,food_waste,open,0
+2026-03-23T15:13:21.063968,4ca0cfe3a5a8416624e2bf7518cf118cd6baa131def07c61f4b9419f7e3dbbd1,KitchenWaste,food_waste,closed,30.0
+2026-03-23T15:17:19.766029,4ca0cfe3a5a8416624e2bf7518cf118cd6baa131def07c61f4b9419f7e3dbbd1,Toys,other,open,0
+2026-03-23T15:17:49.774004,4ca0cfe3a5a8416624e2bf7518cf118cd6baa131def07c61f4b9419f7e3dbbd1,Toys,other,closed,30.01
+2026-03-23T15:24:45.541100,4ca0cfe3a5a8416624e2bf7518cf118cd6baa131def07c61f4b9419f7e3dbbd1,DirtyItems,other,open,0
+2026-03-23T15:25:15.549186,4ca0cfe3a5a8416624e2bf7518cf118cd6baa131def07c61f4b9419f7e3dbbd1,DirtyItems,other,closed,30.01
+2026-03-23T15:32:12.178433,4ca0cfe3a5a8416624e2bf7518cf118cd6baa131def07c61f4b9419f7e3dbbd1,FoodScraps,food_waste,open,0
+2026-03-23T15:32:42.187176,4ca0cfe3a5a8416624e2bf7518cf118cd6baa131def07c61f4b9419f7e3dbbd1,FoodScraps,food_waste,closed,30.01
