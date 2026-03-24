@@ -1593,9 +1593,10 @@ with st.sidebar:
     st.metric("Status", "✅ Active" if st.session_state.state["session_active"] else "❌ Waiting")
     if st.session_state.state["session_active"]:
         st.metric("User", st.session_state.state["active_user_id"] or "Unknown")
-    if st.button("🔄 Exit to Main"):
-        reset_session()
-        st.switch_page("main.py")
+    # HAPUS tombol Exit to Main di sidebar (tidak perlu, sudah ada Logout di main area)
+    # if st.button("🔄 Exit to Main"):
+    #     reset_session()
+    #     st.switch_page("main.py")
 
 # =============================
 # MAIN LOGIC
@@ -1627,13 +1628,10 @@ else:
         time.sleep(2)
         st.switch_page("main.py")
 
-    col_user, col_timer, col_out = st.columns([2, 2, 1])
+    # User info row (tanpa tombol Logout di sini)
+    col_user, col_timer = st.columns([3, 1])
     col_user.info(f"👤 **User:** {st.session_state.state['active_user_id']}")
     col_timer.progress(remaining / st.session_state.state["timeout_seconds"], text=f"⏱️ {int(remaining)}s left")
-    if col_out.button("🚪 Logout"):
-        publish("smartwaste/user/timeout", {"user_id": st.session_state.state["active_user_id"], "reason": "logout"})
-        reset_session()
-        st.switch_page("main.py")
 
     st.divider()
     
@@ -1754,7 +1752,7 @@ else:
                     st.rerun()
             
             with col2:
-                if st.button("🚪 Exit to Main"):
+                if st.button("🚪 Logout", type="secondary"):
                     publish("smartwaste/user/timeout", {
                         "user_id": st.session_state.state["active_user_id"],
                         "reason": "logout"

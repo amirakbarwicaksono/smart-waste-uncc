@@ -6,32 +6,54 @@ import streamlit as st
 import pandas as pd
 import time
 from datetime import datetime, timedelta
-import numpy as np
+import plotly.express as px
+import plotly.graph_objects as go
 
 LOG_FILE = "logs/transactions.csv"
+INFERENCE_FILE = "logs/inference_latency.csv"
 
-st.header("🎮 Digital Twin - Human Behavior Analytics")
+st.set_page_config(page_title="Digital Twin", layout="wide", page_icon="🎮")
 
 # =============================
-# SIDEBAR CONTROLS
+# CUSTOM CSS
 # =============================
-st.sidebar.subheader("⏰ Time Range")
-time_range = st.sidebar.selectbox(
-    "Select period:",
-    ["Last Hour", "Last 6 Hours", "Last 24 Hours", "Last 7 Days", "All Time"],
-    index=2
-)
+st.markdown("""
+<style>
+    .stApp { background: #0a0a0a; }
+    .main-header { color: #fff; font-size: 1.8rem; font-weight: 600; text-align: center; margin-bottom: 0.5rem; }
+    .sub-header { color: #888; font-size: 0.8rem; text-align: center; margin-bottom: 1rem; }
+    .bin-card { border-radius: 10px; padding: 8px; text-align: center; margin: 3px; }
+    .bin-open { border: 2px solid #fff; box-shadow: 0 0 10px rgba(255,255,255,0.3); }
+    .metric-value { font-size: 1.5rem; font-weight: bold; }
+    .metric-label { font-size: 0.7rem; color: #888; }
+    .inference-card { background: #1a1a1a; border-radius: 10px; padding: 10px; margin: 3px; }
+    hr { margin: 0.5rem 0; }
+</style>
+""", unsafe_allow_html=True)
 
-refresh_rate = st.sidebar.slider("Refresh Rate (seconds)", 1, 10, 2)
+# =============================
+# SIDEBAR
+# =============================
+with st.sidebar:
+    st.markdown("### ⚙️ Controls")
+    time_range = st.selectbox("Time Range", ["Last Hour", "Last 6 Hours", "Last 24 Hours", "Last 7 Days", "All Time"], index=2)
+    refresh_rate = st.slider("Refresh (sec)", 1, 5, 2)
+    st.markdown("---")
+    st.caption("Live data from smart waste system")
+
+# =============================
+# HEADER
+# =============================
+st.markdown('<div class="main-header">🎮 Digital Twin | Smart Waste Analytics</div>', unsafe_allow_html=True)
+st.markdown('<div class="sub-header">Real-time bin status & AI inference monitoring</div>', unsafe_allow_html=True)
+st.markdown("---")
 
 # =============================
 # HELPER FUNCTIONS
 # =============================
 def filter_by_time(df, time_range):
-    """Filter dataframe based on selected time range"""
     if len(df) == 0 or time_range == "All Time":
         return df
-    
     now = datetime.now()
     if time_range == "Last Hour":
         cutoff = now - timedelta(hours=1)
@@ -43,86 +65,39 @@ def filter_by_time(df, time_range):
         cutoff = now - timedelta(days=7)
     else:
         return df
-    
     df['datetime'] = pd.to_datetime(df['timestamp'])
     return df[df['datetime'] >= cutoff]
 
-def get_user_behavior(df):
-    """Analyze user behavior patterns"""
-    if len(df) == 0:
-        return pd.DataFrame()
-    
-    # Get only open events for user analysis
-    user_actions = df[df["bin_state"] == "open"].copy()
-    
-    if len(user_actions) == 0:
-        return pd.DataFrame()
-    
-    # Group by user
-    user_stats = user_actions.groupby("barcode").agg({
-        "timestamp": "count",
-        "bin_type": lambda x: x.mode()[0] if len(x.mode()) > 0 else "unknown",
-        "waste_type": lambda x: x.mode()[0] if len(x.mode()) > 0 else "unknown",
-        "bin_duration_sec": "mean"
-    }).rename(columns={
-        "timestamp": "total_actions",
-        "bin_type": "favorite_bin",
-        "waste_type": "favorite_waste",
-        "bin_duration_sec": "avg_duration"
-    }).round(1)
-    
-    # Add last active time
-    last_active = user_actions.groupby("barcode")["timestamp"].max()
-    user_stats["last_active"] = pd.to_datetime(last_active).dt.strftime("%H:%M:%S")
-    
-    return user_stats.sort_values("total_actions", ascending=False)
+def get_latest_inference():
+    if os.path.exists(INFERENCE_FILE):
+        df = pd.read_csv(INFERENCE_FILE)
+        if len(df) > 0:
+            return df.sort_values('timestamp', ascending=False).head(1)
+    return pd.DataFrame()
 
 def get_hourly_pattern(df):
-    """Analyze hourly usage patterns"""
     if len(df) == 0:
         return pd.DataFrame()
-    
     df_copy = df[df["bin_state"] == "open"].copy()
     if len(df_copy) == 0:
         return pd.DataFrame()
-    
     df_copy["hour"] = pd.to_datetime(df_copy["timestamp"]).dt.hour
     hourly = df_copy.groupby("hour").size()
-    
-    # Fill missing hours
     all_hours = pd.DataFrame(index=range(24))
     hourly = hourly.reindex(all_hours.index, fill_value=0)
-    
     return hourly
 
-def get_bin_transitions(df):
-    """Track how users move between bins"""
-    if len(df) == 0:
-        return pd.DataFrame()
-    
-    # Sort by user and timestamp
-    df_sorted = df[df["bin_state"] == "open"].sort_values(["barcode", "timestamp"])
-    
-    # Create transition pairs
-    transitions = []
-    for user in df_sorted["barcode"].unique():
-        user_data = df_sorted[df_sorted["barcode"] == user]
-        bins = user_data["bin_type"].tolist()
-        for i in range(len(bins) - 1):
-            transitions.append({
-                "from_bin": bins[i],
-                "to_bin": bins[i + 1]
-            })
-    
-    if transitions:
-        trans_df = pd.DataFrame(transitions)
-        return trans_df.groupby(["from_bin", "to_bin"]).size().reset_index(name="count")
-    return pd.DataFrame()
-
 # =============================
-# BIN LIST
+# COLORS
 # =============================
 BINS = ["recycling", "food_waste", "other", "harmful"]
+BIN_ICONS = {"recycling": "♻️", "food_waste": "🍎", "other": "🗑️", "harmful": "⚠️"}
+BIN_COLORS = {
+    "recycling": {"bg": "#1e3a5f", "border": "#3b82f6", "open": "#60a5fa"},
+    "food_waste": {"bg": "#1e4a2e", "border": "#22c55e", "open": "#4ade80"},
+    "other": {"bg": "#2d2d2d", "border": "#6b7280", "open": "#9ca3af"},
+    "harmful": {"bg": "#4a1a1a", "border": "#ef4444", "open": "#f87171"}
+}
 
 # =============================
 # MAIN LOOP
@@ -136,270 +111,182 @@ while True:
             df = pd.read_csv(LOG_FILE)
             
             if len(df) > 0:
-                
-                # Apply time filter
                 df_filtered = filter_by_time(df, time_range)
+                latest_inference = get_latest_inference()
                 
                 # =============================
-                # REAL-TIME HUMAN ACTIVITY METRICS
+                # TOP METRICS (4 columns)
                 # =============================
-                st.subheader("👥 Live Human Activity")
-                
-                col1, col2, col3, col4 = st.columns(4)
-                
-                # Active users in last 5 minutes
                 now = datetime.now()
                 five_min_ago = now - timedelta(minutes=5)
                 df['datetime'] = pd.to_datetime(df['timestamp'])
                 active_users = df[df['datetime'] >= five_min_ago]['barcode'].nunique()
-                
-                with col1:
-                    st.metric("Active Users Now", active_users, delta=None)
-                
-                # Total users in selected period
-                total_users = df_filtered['barcode'].nunique()
-                with col2:
-                    st.metric("Total Users", total_users)
-                
-                # Total actions
                 total_actions = len(df_filtered[df_filtered["bin_state"] == "open"])
+                total_users = df_filtered['barcode'].nunique()
+                conf_val = latest_inference.iloc[0]['confidence'] * 100 if not latest_inference.empty else 0
+                
+                col1, col2, col3, col4 = st.columns(4)
+                with col1:
+                    st.markdown(f'<div class="metric-value">{active_users}</div><div class="metric-label">ACTIVE NOW</div>', unsafe_allow_html=True)
+                with col2:
+                    st.markdown(f'<div class="metric-value">{total_actions}</div><div class="metric-label">TOTAL DISPOSALS</div>', unsafe_allow_html=True)
                 with col3:
-                    st.metric("Total Actions", total_actions)
-                
-                # Actions per user
-                actions_per_user = round(total_actions / total_users, 1) if total_users > 0 else 0
+                    st.markdown(f'<div class="metric-value">{total_users}</div><div class="metric-label">TOTAL USERS</div>', unsafe_allow_html=True)
                 with col4:
-                    st.metric("Avg Actions/User", actions_per_user)
+                    st.markdown(f'<div class="metric-value">{conf_val:.0f}%</div><div class="metric-label">AI CONFIDENCE</div>', unsafe_allow_html=True)
                 
-                st.divider()
+                st.markdown("---")
                 
                 # =============================
-                # BIN STATUS WITH HUMAN INTERACTION
+                # BIN STATUS (4 cards in one row)
                 # =============================
-                st.subheader("🗑️ Bin Status - Real Time")
+                st.markdown("### 🗑️ Bin Status")
                 
-                latest = df.sort_values("timestamp").groupby("bin_type").tail(1)
+                latest_bin = df.sort_values("timestamp").groupby("bin_type").tail(1)
                 open_events = df_filtered[df_filtered["bin_state"] == "open"]
                 
-                cols = st.columns(4)
-                
+                bin_cols = st.columns(4)
                 for i, bin_name in enumerate(BINS):
-                    with cols[i]:
-                        bin_data = latest[latest["bin_type"] == bin_name]
+                    with bin_cols[i]:
+                        colors = BIN_COLORS[bin_name]
+                        bin_data = latest_bin[latest_bin["bin_type"] == bin_name]
                         
                         if not bin_data.empty:
                             state = bin_data.iloc[0]["bin_state"]
                             last_time = bin_data.iloc[0]["timestamp"][-8:]
-                            last_user = str(bin_data.iloc[0]["barcode"])
-                            last_waste = bin_data.iloc[0]["waste_type"]
                             total_uses = len(open_events[open_events["bin_type"] == bin_name])
-                            unique_users = df_filtered[df_filtered["bin_type"] == bin_name]['barcode'].nunique()
                             
                             if state == "open":
-                                st.markdown(f"### {bin_name.upper()}")
-                                st.success("🟢 OPEN")
-                                st.caption(f"👤 Current: User {last_user[-4:]}")
-                                st.caption(f"🗑️ Waste: {last_waste}")
-                                st.caption(f"⏱️ Since: {last_time}")
-                                st.caption(f"📊 Today: {total_uses} uses | {unique_users} users")
+                                st.markdown(f"""
+                                <div class="bin-card bin-open" style="background: {colors['bg']};">
+                                    <div style="font-size: 1.6rem;">{BIN_ICONS[bin_name]}</div>
+                                    <div style="font-weight: bold;">{bin_name.upper()}</div>
+                                    <div style="color: {colors['open']};">🟢 OPEN</div>
+                                    <div style="font-size: 0.7rem;">Since: {last_time}</div>
+                                    <div style="font-size: 0.7rem;">Uses: {total_uses}</div>
+                                </div>
+                                """, unsafe_allow_html=True)
                             else:
-                                st.markdown(f"### {bin_name.upper()}")
-                                st.error("🔴 CLOSED")
-                                st.caption(f"👤 Last: User {last_user[-4:]}")
-                                st.caption(f"🗑️ Waste: {last_waste}")
-                                st.caption(f"⏱️ At: {last_time}")
-                                st.caption(f"📊 Today: {total_uses} uses | {unique_users} users")
+                                st.markdown(f"""
+                                <div class="bin-card" style="background: {colors['bg']};">
+                                    <div style="font-size: 1.6rem;">{BIN_ICONS[bin_name]}</div>
+                                    <div style="font-weight: bold;">{bin_name.upper()}</div>
+                                    <div style="color: #ff6666;">🔴 CLOSED</div>
+                                    <div style="font-size: 0.7rem;">Last: {last_time}</div>
+                                    <div style="font-size: 0.7rem;">Uses: {total_uses}</div>
+                                </div>
+                                """, unsafe_allow_html=True)
                         else:
-                            st.markdown(f"### {bin_name.upper()}")
-                            st.warning("No Data")
-                            st.caption("No activity recorded")
+                            st.markdown(f"""
+                            <div class="bin-card" style="background: {colors['bg']}; opacity: 0.5;">
+                                <div style="font-size: 1.6rem;">{BIN_ICONS[bin_name]}</div>
+                                <div>{bin_name.upper()}</div>
+                                <div style="font-size: 0.7rem;">No Data</div>
+                            </div>
+                            """, unsafe_allow_html=True)
                 
-                st.divider()
+                st.markdown("---")
                 
                 # =============================
-                # USER BEHAVIOR ANALYSIS
+                # AI INFERENCE (Full details)
                 # =============================
-                st.subheader("📊 User Behavior Analysis")
+                st.markdown("### 🤖 AI Inference")
                 
-                user_stats = get_user_behavior(df_filtered)
-                
-                if not user_stats.empty:
-                    tab1, tab2, tab3 = st.tabs(["Top Users", "Hourly Pattern", "Movement Flow"])
+                if not latest_inference.empty:
+                    latest = latest_inference.iloc[0]
+                    confidence = latest['confidence'] * 100
                     
-                    with tab1:
-                        col1, col2 = st.columns([1, 1])
-                        
-                        with col1:
-                            st.write("**Most Active Users**")
-                            top_users = user_stats.head(10).reset_index()
-                            top_users['barcode_short'] = top_users['barcode'].astype(str).str[-4:]
-                            st.dataframe(
-                                top_users[['barcode_short', 'total_actions', 'favorite_bin', 'favorite_waste', 'last_active']],
-                                use_container_width=True,
-                                hide_index=True
-                            )
-                        
-                        with col2:
-                            st.write("**User Distribution**")
-                            # Group users by number of actions
-                            labels = ['1-2', '3-5', '6-10', '11-20', '21-50', '50+']
-                            bins = [0, 2, 5, 10, 20, 50, 1000]
-                            user_stats['action_group'] = pd.cut(user_stats['total_actions'], bins=bins, labels=labels)
-                            dist = user_stats['action_group'].value_counts().sort_index()
-                            st.bar_chart(dist)
+                    col_left, col_right = st.columns([1, 1])
                     
-                    with tab2:
-                        col1, col2 = st.columns(2)
-                        
-                        with col1:
-                            st.write("**Hourly Activity Pattern**")
-                            hourly = get_hourly_pattern(df_filtered)
-                            if not hourly.empty:
-                                st.line_chart(hourly, height=300)
-                                # Peak hours
-                                peak_hour = hourly.idxmax()
-                                st.caption(f"🏆 Peak hour: {peak_hour}:00 ({hourly.max()} actions)")
-                        
-                        with col2:
-                            st.write("**Peak Usage Times**")
-                            # Show top 3 hours
-                            top_hours = hourly.nlargest(3)
-                            for hour, count in top_hours.items():
-                                period = "AM" if hour < 12 else "PM"
-                                display_hour = hour if hour <= 12 else hour - 12
-                                display_hour = 12 if display_hour == 0 else display_hour
-                                st.info(f"⏰ {display_hour}:00 {period} - {count} actions")
+                    with col_left:
+                        # Metrics table
+                        st.markdown(f"""
+                        <div class="inference-card">
+                            <div style="font-size: 1.2rem; font-weight: bold;">{latest.get('waste_type', 'N/A')}</div>
+                            <div style="font-size: 0.8rem; color: #aaa;">→ {latest.get('bin_type', 'N/A')}</div>
+                            <hr>
+                            <table style="width: 100%; font-size: 0.75rem;">
+                                <tr><td>Preprocessing:</td><td style="text-align: right;"><b>{latest['preprocessing_ms']:.0f}ms</b></td></tr>
+                                <tr><td>Stage 1 (Root):</td><td style="text-align: right;"><b>{latest['stage1_inference_ms']:.0f}ms</b></td></tr>
+                                <tr><td>Stage 2:</td><td style="text-align: right;"><b>{latest['stage2_inference_ms']:.0f}ms</b></td></tr>
+                                <tr><td>Overall Latency:</td><td style="text-align: right;"><b style="color: #ffaa44;">{latest['overall_latency_ms']:.0f}ms</b></td></tr>
+                                <tr><td>Root Category:</td><td style="text-align: right;">{latest.get('root_category', 'N/A')}</td></tr>
+                                <tr><td>Specialist Model:</td><td style="text-align: right;">{latest.get('stage2_model', 'N/A')}</td></tr>
+                            </table>
+                        </div>
+                        """, unsafe_allow_html=True)
                     
-                    with tab3:
-                        st.write("**User Movement Between Bins**")
-                        transitions = get_bin_transitions(df_filtered)
-                        
-                        if not transitions.empty:
-                            # Show as a flow matrix
-                            pivot = transitions.pivot(index="from_bin", columns="to_bin", values="count").fillna(0)
-                            
-                            # Reindex to show all bins
-                            for bin_name in BINS:
-                                if bin_name not in pivot.columns:
-                                    pivot[bin_name] = 0
-                                if bin_name not in pivot.index:
-                                    pivot.loc[bin_name] = 0
-                            
-                            pivot = pivot[BINS].reindex(BINS)
-                            st.dataframe(pivot.astype(int), use_container_width=True)
-                            
-                            st.caption("📊 Numbers show how many times users moved from one bin to another")
-                        else:
-                            st.info("Not enough data for movement analysis")
+                    with col_right:
+                        # Gauge chart
+                        fig = go.Figure(go.Indicator(
+                            mode="gauge+number",
+                            value=confidence,
+                            title={'text': "Confidence Score", 'font': {'size': 12}},
+                            domain={'x': [0, 1], 'y': [0, 1]},
+                            gauge={
+                                'axis': {'range': [None, 100], 'tickwidth': 1, 'tickfont': {'size': 9}},
+                                'bar': {'color': "#3b82f6"},
+                                'bgcolor': "rgba(50,50,50,0.5)",
+                                'steps': [
+                                    {'range': [0, 50], 'color': "rgba(239,68,68,0.3)"},
+                                    {'range': [50, 75], 'color': "rgba(234,179,8,0.3)"},
+                                    {'range': [75, 100], 'color': "rgba(34,197,94,0.3)"}
+                                ]
+                            }
+                        ))
+                        fig.update_layout(height=180, margin=dict(l=20, r=20, t=40, b=20), paper_bgcolor='rgba(0,0,0,0)', font={'color': 'white'})
+                        st.plotly_chart(fig, use_container_width=True)
                 else:
-                    st.info("No user behavior data available for selected period")
+                    st.info("Waiting for AI data...")
                 
-                st.divider()
+                st.markdown("---")
                 
                 # =============================
-                # REAL-TIME ACTIVITY FEED
+                # CHARTS (2 columns)
                 # =============================
-                st.subheader("🔄 Live Activity Feed")
+                col_c1, col_c2 = st.columns(2)
                 
-                recent = df.sort_values("timestamp", ascending=False).head(10)
+                with col_c1:
+                    st.markdown("### 📈 Hourly Activity")
+                    hourly = get_hourly_pattern(df_filtered)
+                    if not hourly.empty:
+                        fig = px.line(hourly, labels={'value': 'Disposals', 'hour': 'Hour'})
+                        fig.update_layout(height=200, margin=dict(l=30, r=20, t=30, b=20), plot_bgcolor='rgba(30,30,30,0.5)', paper_bgcolor='rgba(0,0,0,0)', font={'color': '#ccc'}, xaxis=dict(tickmode='linear', tick0=0, dtick=4))
+                        fig.update_traces(line=dict(color='#3b82f6', width=2))
+                        st.plotly_chart(fig, use_container_width=True)
                 
+                with col_c2:
+                    st.markdown("### 📊 Top Waste Types")
+                    waste_counts = df_filtered[df_filtered["bin_state"] == "open"]["waste_type"].value_counts().head(5)
+                    if not waste_counts.empty:
+                        fig = px.bar(x=waste_counts.values, y=waste_counts.index, orientation='h', labels={'x': '', 'y': ''})
+                        fig.update_layout(height=200, margin=dict(l=20, r=20, t=30, b=20), plot_bgcolor='rgba(30,30,30,0.5)', paper_bgcolor='rgba(0,0,0,0)', font={'color': '#ccc'})
+                        fig.update_traces(marker_color='#22c55e')
+                        st.plotly_chart(fig, use_container_width=True)
+                
+                st.markdown("---")
+                
+                # =============================
+                # ACTIVITY FEED
+                # =============================
+                st.markdown("### 🔄 Recent Activity")
+                
+                recent = df.sort_values("timestamp", ascending=False).head(5)
                 for _, row in recent.iterrows():
                     time_str = row["timestamp"][-8:]
-                    user_short = str(row["barcode"])[-4:]
+                    user_short = str(row["barcode"])[-8:]
+                    icon = "🟢" if row["bin_state"] == "open" else "🔴"
+                    action = "opened" if row["bin_state"] == "open" else "closed"
                     
-                    if row["bin_state"] == "open":
-                        st.info(
-                            f"🟢 [{time_str}] **User {user_short}** opened **{row['bin_type']}** bin for **{row['waste_type']}**",
-                            icon="👤"
-                        )
-                    else:
-                        st.success(
-                            f"🔴 [{time_str}] **User {user_short}** closed **{row['bin_type']}** bin after **{row['bin_duration_sec']:.1f}s**",
-                            icon="✅"
-                        )
-                
-                st.divider()
-                
-                # =============================
-                # BEHAVIOR INSIGHTS
-                # =============================
-                st.subheader("💡 Behavior Insights")
-                
-                if len(user_stats) > 0:
-                    col1, col2 = st.columns(2)
-                    
-                    with col1:
-                        # Most common waste type
-                        top_waste = df_filtered[df_filtered["bin_state"] == "open"]["waste_type"].mode()
-                        if len(top_waste) > 0:
-                            st.info(f"🗑️ **Most Disposed Waste:** {top_waste.iloc[0]}")
-                        
-                        # Most active hour
-                        hourly = get_hourly_pattern(df_filtered)
-                        if not hourly.empty and hourly.max() > 0:
-                            peak = hourly.idxmax()
-                            period = "AM" if peak < 12 else "PM"
-                            display = peak if peak <= 12 else peak - 12
-                            display = 12 if display == 0 else display
-                            st.info(f"⏰ **Peak Activity:** {display}:00 {period}")
-                    
-                    with col2:
-                        # User with most actions
-                        top_user = user_stats.head(1)
-                        if len(top_user) > 0:
-                            st.info(f"👑 **Most Active User:** User {str(top_user.index[0])[-4:]} ({top_user.iloc[0]['total_actions']} actions)")
-                        
-                        # Average session duration
-                        avg_session = df_filtered[df_filtered["bin_state"] == "closed"]["bin_duration_sec"].mean()
-                        if not pd.isna(avg_session):
-                            st.info(f"⏱️ **Avg Interaction Time:** {avg_session:.1f} seconds")
-                
-                st.divider()
-                
-                # =============================
-                # RECENT TRANSACTIONS
-                # =============================
-                st.subheader("📄 Recent Transactions")
-                display_df = df[["timestamp", "barcode", "waste_type", "bin_type", "bin_state", "bin_duration_sec"]].tail(15).copy()
-                display_df['barcode'] = display_df['barcode'].astype(str).str[-4:]  # Show last 4 digits only
-                display_df['timestamp'] = pd.to_datetime(display_df['timestamp']).dt.strftime("%H:%M:%S")
-                st.dataframe(display_df, use_container_width=True, hide_index=True)
+                    st.markdown(f"""
+                    <div style="border-left: 2px solid {'#22c55e' if row['bin_state'] == 'open' else '#ef4444'}; padding-left: 8px; margin: 3px 0; font-size: 0.8rem;">
+                        {icon} <strong>{time_str}</strong> - User {user_short} {action} {row['bin_type']} bin for {row['waste_type']}
+                    </div>
+                    """, unsafe_allow_html=True)
                 
             else:
-                st.warning("Log file is empty.")
+                st.warning("No data available")
         else:
-            st.warning("No data available yet. Please run some transactions first.")
+            st.warning("Waiting for data...")
     
     time.sleep(refresh_rate)
-# 1. Live Human Activity Metrics
-
-# Active users now (last 5 minutes)
-# Total users in period
-# Total actions
-# Average actions per user
-# 2. Bin Status dengan Konteks Manusia
-
-# Current user (last 4 digits)
-# Current waste type
-# Time since open/last closed
-# Total uses & unique users today
-# 3. User Behavior Analysis
-
-# Top Users Table: Most active users dengan preferensi mereka
-# User Distribution: Kategorisasi pengguna (casual vs power users)
-# Hourly Pattern: Kapan pengguna paling aktif
-# Movement Flow: Bagaimana pengguna berpindah antar bin
-# 4. Live Activity Feed
-
-# Real-time updates dengan user info
-# Waktu, user, bin, waste type, duration
-# 5. Behavior Insights
-
-# Most disposed waste type
-# Peak activity hour
-# Most active user
-# Average interaction time
-# 6. Privacy-Focused Display
-
-# Hanya menampilkan 4 digit terakhir barcode
-# Tidak menampilkan data sensitif
