@@ -1,7 +1,4 @@
 import streamlit as st
-# Sesuaikan import get_listener/get_messages dengan lokasi asli file listener Anda
-# Contoh: dari core.mqtt.listener import ... 
-# (Sesuaikan line di bawah ini dengan struktur file listener Anda)
 from core.mqtt.listener import get_listener, get_messages 
 
 def init_state():

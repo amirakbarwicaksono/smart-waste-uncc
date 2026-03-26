@@ -12,7 +12,7 @@ import plotly.graph_objects as go
 LOG_FILE = "logs/transactions.csv"
 INFERENCE_FILE = "logs/inference_latency.csv"
 
-st.set_page_config(page_title="Digital Twin", layout="wide", page_icon="🎮")
+st.set_page_config(page_title="Dashboard", layout="wide", page_icon="🎮")
 
 # =============================
 # CUSTOM CSS
@@ -44,7 +44,7 @@ with st.sidebar:
 # =============================
 # HEADER
 # =============================
-st.markdown('<div class="main-header">🎮 Digital Twin | Smart Waste Analytics</div>', unsafe_allow_html=True)
+st.markdown('<div class="main-header">♻️ Dashboard | Smart Waste Analytics</div>', unsafe_allow_html=True)
 st.markdown('<div class="sub-header">Real-time bin status & AI inference monitoring</div>', unsafe_allow_html=True)
 st.markdown("---")
 

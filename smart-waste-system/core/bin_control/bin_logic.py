@@ -6,12 +6,12 @@ import time
 
 def open_bin(bin_type):
     start = time.time()
-    st.warning(f"Opening {bin_type} bin...")
+    # st.warning(f" {bin_type} bin...")
 
     # Log open state immediately
     open_time = round(start, 2)
 
-    with st.spinner("Bin is open..."):
+    with st.spinner("Loading..."):
         time.sleep(30)
 
     end = time.time()
@@ -25,4 +25,3 @@ def open_bin(bin_type):
         "close_timestamp": end,
         "duration": duration
     }
-

@@ -45,3 +45,15 @@ timestamp,barcode,waste_type,bin_type,bin_state,bin_duration_sec,weight_status
 2026-03-24T16:33:00.966700,4ca0cfe3a5a8416624e2bf7518cf118cd6baa131def07c61f4b9419f7e3dbbd1,Vegetation,food_waste,closed,30.0,True
 2026-03-24T16:36:37.856120,4ca0cfe3a5a8416624e2bf7518cf118cd6baa131def07c61f4b9419f7e3dbbd1,Metal,recycling,open,0,True
 2026-03-24T16:37:07.866251,4ca0cfe3a5a8416624e2bf7518cf118cd6baa131def07c61f4b9419f7e3dbbd1,Metal,recycling,closed,30.01,True
+2026-03-25T10:05:01.836884,4ca0cfe3a5a8416624e2bf7518cf118cd6baa131def07c61f4b9419f7e3dbbd1,GlassContainer,recycling,open,0,False
+2026-03-25T10:05:31.846187,4ca0cfe3a5a8416624e2bf7518cf118cd6baa131def07c61f4b9419f7e3dbbd1,GlassContainer,recycling,closed,30.01,False
+2026-03-25T10:05:49.966360,4ca0cfe3a5a8416624e2bf7518cf118cd6baa131def07c61f4b9419f7e3dbbd1,Vegetation,food_waste,open,0,True
+2026-03-25T10:06:19.974869,4ca0cfe3a5a8416624e2bf7518cf118cd6baa131def07c61f4b9419f7e3dbbd1,Vegetation,food_waste,closed,30.01,True
+2026-03-25T10:21:01.851876,4ca0cfe3a5a8416624e2bf7518cf118cd6baa131def07c61f4b9419f7e3dbbd1,KitchenWaste,food_waste,open,0,True
+2026-03-25T10:21:31.860572,4ca0cfe3a5a8416624e2bf7518cf118cd6baa131def07c61f4b9419f7e3dbbd1,KitchenWaste,food_waste,closed,30.01,True
+2026-03-25T10:42:48.272439,4ca0cfe3a5a8416624e2bf7518cf118cd6baa131def07c61f4b9419f7e3dbbd1,Vegetation,food_waste,open,0,True
+2026-03-25T10:43:18.278632,4ca0cfe3a5a8416624e2bf7518cf118cd6baa131def07c61f4b9419f7e3dbbd1,Vegetation,food_waste,closed,30.01,True
+2026-03-25T10:43:40.352048,4ca0cfe3a5a8416624e2bf7518cf118cd6baa131def07c61f4b9419f7e3dbbd1,GlassContainer,recycling,open,0,False
+2026-03-25T10:44:10.356410,4ca0cfe3a5a8416624e2bf7518cf118cd6baa131def07c61f4b9419f7e3dbbd1,GlassContainer,recycling,closed,30.0,False
+2026-03-25T10:44:31.086465,4ca0cfe3a5a8416624e2bf7518cf118cd6baa131def07c61f4b9419f7e3dbbd1,Vegetation,food_waste,open,0,True
+2026-03-25T10:45:01.100557,4ca0cfe3a5a8416624e2bf7518cf118cd6baa131def07c61f4b9419f7e3dbbd1,Vegetation,food_waste,closed,30.01,True
