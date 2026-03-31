@@ -1,0 +1,4 @@
+blockchain:
+  canister_id: "rrkah-fqaaa-aaaaa-aaaaq-cai"
+  network: "local"  # local, testnet, mainnet
+  timeout: 30

@@ -1,0 +1,287 @@
+{
+  "genesis": {
+    "timestamp": "2026-03-30T20:57:08.458091",
+    "block_height": 0,
+    "previous_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+    "transactions": []
+  },
+  "transactions": [
+    {
+      "transaction_id": "00d6f174-63e4-4cfc-8b0c-51acee7a21f6",
+      "timestamp": "2026-03-30T21:22:59.712503",
+      "user": {
+        "hash": "unknown",
+        "display_name": "4ca0cfe3a5a8416624e2bf7518cf118cd6baa131def07c61f4b9419f7e3dbbd1"
+      },
+      "waste": {
+        "type": "GlassContainer",
+        "bin_type": "recycling"
+      },
+      "verification": {
+        "weight_detected": true,
+        "is_valid": true
+      },
+      "metrics": {
+        "duration_seconds": 30.01,
+        "points_earned": 0.5,
+        "reward_reason": "weight_confirmed"
+      },
+      "hash": "d99605ef837283db9533eca8c85d96099efba55cafd12dd906f5d6353098ed49"
+    },
+    {
+      "transaction_id": "e901c984-ad79-4e8e-b6b7-e372f26c825c",
+      "timestamp": "2026-03-30T21:23:34.863398",
+      "user": {
+        "hash": "unknown",
+        "display_name": "4ca0cfe3a5a8416624e2bf7518cf118cd6baa131def07c61f4b9419f7e3dbbd1"
+      },
+      "waste": {
+        "type": "GlassContainer",
+        "bin_type": "recycling"
+      },
+      "verification": {
+        "weight_detected": true,
+        "is_valid": true
+      },
+      "metrics": {
+        "duration_seconds": 30.01,
+        "points_earned": 0.5,
+        "reward_reason": "weight_confirmed"
+      },
+      "hash": "b9e0a831bf2f8de7627beb91915e0edf5f227d63fcbf12f95589690c7763c985"
+    },
+    {
+      "transaction_id": "224aff61-52ab-4dc8-b224-d915b1f8a753",
+      "timestamp": "2026-03-30T21:25:17.675165",
+      "user": {
+        "hash": "unknown",
+        "display_name": "4ca0cfe3a5a8416624e2bf7518cf118cd6baa131def07c61f4b9419f7e3dbbd1"
+      },
+      "waste": {
+        "type": "Paper",
+        "bin_type": "recycling"
+      },
+      "verification": {
+        "weight_detected": true,
+        "is_valid": true
+      },
+      "metrics": {
+        "duration_seconds": 30.01,
+        "points_earned": 0.5,
+        "reward_reason": "weight_confirmed"
+      },
+      "hash": "6529dc6222f7ce176986655b98e403f6b597273516586d8f0d933a21d1799200"
+    },
+    {
+      "transaction_id": "b75f782a-3324-4969-856d-64b6e7a3372b",
+      "timestamp": "2026-03-30T22:11:30.832468",
+      "user": {
+        "hash": "unknown",
+        "display_name": "4ca0cfe3a5a8416624e2bf7518cf118cd6baa131def07c61f4b9419f7e3dbbd1"
+      },
+      "waste": {
+        "type": "Toys",
+        "bin_type": "other"
+      },
+      "verification": {
+        "weight_detected": true,
+        "is_valid": true
+      },
+      "metrics": {
+        "duration_seconds": 30.01,
+        "points_earned": 0.5,
+        "reward_reason": "weight_confirmed"
+      },
+      "hash": "daf444d9e5c614e3432bb13124c981956d92b6e26fe229d71b30c1a455489788"
+    },
+    {
+      "transaction_id": "b09e8544-9acd-4b59-afed-4fe4a2900f27",
+      "timestamp": "2026-03-30T22:17:10.649228",
+      "user": {
+        "hash": "unknown",
+        "display_name": "4ca0cfe3a5a8416624e2bf7518cf118cd6baa131def07c61f4b9419f7e3dbbd1"
+      },
+      "waste": {
+        "type": "Toys",
+        "bin_type": "other"
+      },
+      "verification": {
+        "weight_detected": true,
+        "is_valid": true
+      },
+      "metrics": {
+        "duration_seconds": 30.01,
+        "points_earned": 0.5,
+        "reward_reason": "weight_confirmed"
+      },
+      "hash": "2b8da09e8fffe063c56cbbe516a59514cfe600632771bd449ec1e85e28d84586"
+    },
+    {
+      "transaction_id": "99a254a5-1ab5-47f1-9e88-1035374e78d3",
+      "timestamp": "2026-03-30T22:27:20.688667",
+      "user": {
+        "hash": "unknown",
+        "display_name": "4ca0cfe3a5a8416624e2bf7518cf118cd6baa131def07c61f4b9419f7e3dbbd1"
+      },
+      "waste": {
+        "type": "Textile",
+        "bin_type": "recycling"
+      },
+      "verification": {
+        "weight_detected": true,
+        "is_valid": true
+      },
+      "metrics": {
+        "duration_seconds": 30.01,
+        "points_earned": 0.5,
+        "reward_reason": "weight_confirmed"
+      },
+      "hash": "3e3a0f5f16a3df347ec796b334a4147775f2c4d1e799bf97c0e29b29934d8241"
+    },
+    {
+      "transaction_id": "f52f6b31-7f22-42d1-960a-31cc55b6dc36",
+      "timestamp": "2026-03-30T22:33:45.591726",
+      "user": {
+        "hash": "unknown",
+        "display_name": "4ca0cfe3a5a8416624e2bf7518cf118cd6baa131def07c61f4b9419f7e3dbbd1"
+      },
+      "waste": {
+        "type": "Textile",
+        "bin_type": "recycling"
+      },
+      "verification": {
+        "weight_detected": true,
+        "is_valid": true
+      },
+      "metrics": {
+        "duration_seconds": 30.01,
+        "points_earned": 0.5,
+        "reward_reason": "weight_confirmed"
+      },
+      "hash": "0a039a6726ac118c3d06ffb93aaf6ed3c46f40b910f0ea032a38eb0aa26d8614"
+    },
+    {
+      "transaction_id": "27847b82-f130-4476-953b-db8dfbd5c487",
+      "timestamp": "2026-03-30T22:34:39.992133",
+      "user": {
+        "hash": "unknown",
+        "display_name": "4ca0cfe3a5a8416624e2bf7518cf118cd6baa131def07c61f4b9419f7e3dbbd1"
+      },
+      "waste": {
+        "type": "DirtyItems",
+        "bin_type": "other"
+      },
+      "verification": {
+        "weight_detected": true,
+        "is_valid": true
+      },
+      "metrics": {
+        "duration_seconds": 30.01,
+        "points_earned": 0.5,
+        "reward_reason": "weight_confirmed"
+      },
+      "hash": "7280b6d4c9278606e98286fb456cd2f076f7b09b95b971acd8bac51781a980f3"
+    },
+    {
+      "transaction_id": "8bb8c380-44ab-4128-91c8-f0c87cc9f837",
+      "timestamp": "2026-03-30T22:35:39.406150",
+      "user": {
+        "hash": "unknown",
+        "display_name": "4ca0cfe3a5a8416624e2bf7518cf118cd6baa131def07c61f4b9419f7e3dbbd1"
+      },
+      "waste": {
+        "type": "DirtyItems",
+        "bin_type": "other"
+      },
+      "verification": {
+        "weight_detected": true,
+        "is_valid": true
+      },
+      "metrics": {
+        "duration_seconds": 30.01,
+        "points_earned": 0.5,
+        "reward_reason": "weight_confirmed"
+      },
+      "hash": "b28bd8937999039b31ee4cd54f3e3ce50e57a2d6e1c3644af4db7c2448324747"
+    },
+    {
+      "transaction_id": "63670c8f-518a-4b02-b4c0-2e6ee29be306",
+      "timestamp": "2026-03-31T14:55:03.292706",
+      "user": {
+        "hash": "unknown",
+        "display_name": "4ca0cfe3a5a8416624e2bf7518cf118cd6baa131def07c61f4b9419f7e3dbbd1"
+      },
+      "waste": {
+        "type": "Paper",
+        "bin_type": "recycling"
+      },
+      "verification": {
+        "weight_detected": true,
+        "is_valid": true
+      },
+      "metrics": {
+        "duration_seconds": 30.0,
+        "points_earned": 0.5,
+        "reward_reason": "weight_confirmed"
+      },
+      "hash": "9c15c1c07ed10868ad354c7d4571b5cb64038ee6d3ab855bcd0976f76f009985"
+    },
+    {
+      "transaction_id": "138e5587-a56f-492d-a290-cc02ed05dc1b",
+      "timestamp": "2026-03-31T14:55:52.221726",
+      "user": {
+        "hash": "unknown",
+        "display_name": "4ca0cfe3a5a8416624e2bf7518cf118cd6baa131def07c61f4b9419f7e3dbbd1"
+      },
+      "waste": {
+        "type": "GlassContainer",
+        "bin_type": "recycling"
+      },
+      "verification": {
+        "weight_detected": true,
+        "is_valid": true
+      },
+      "metrics": {
+        "duration_seconds": 30.01,
+        "points_earned": 0.5,
+        "reward_reason": "weight_confirmed"
+      },
+      "hash": "48c3495095297701cb07ec23172d8f411bb79c392c9f529f18ee5e33f9a48c89"
+    },
+    {
+      "transaction_id": "15f01ae6-c2a9-4229-be90-d590a77353e2",
+      "timestamp": "2026-03-31T14:57:17.780845",
+      "user": {
+        "hash": "unknown",
+        "display_name": "4ca0cfe3a5a8416624e2bf7518cf118cd6baa131def07c61f4b9419f7e3dbbd1"
+      },
+      "waste": {
+        "type": "KitchenWaste",
+        "bin_type": "food_waste"
+      },
+      "verification": {
+        "weight_detected": true,
+        "is_valid": true
+      },
+      "metrics": {
+        "duration_seconds": 30.01,
+        "points_earned": 0.5,
+        "reward_reason": "weight_confirmed"
+      },
+      "hash": "9247aa3a102a8c0420ecffd52b6b504af57831389634d5a56177c6594389a452"
+    }
+  ],
+  "stats": {
+    "total_transactions": 12,
+    "total_users": 1,
+    "total_points_earned": 6.0
+  },
+  "users": {
+    "unknown": {
+      "total_transactions": 12,
+      "total_points": 6.0,
+      "last_active": "2026-03-31T14:57:17.781535",
+      "display_name": "4ca0cfe3a5a8416624e2bf7518cf118cd6baa131def07c61f4b9419f7e3dbbd1"
+    }
+  }
+}
