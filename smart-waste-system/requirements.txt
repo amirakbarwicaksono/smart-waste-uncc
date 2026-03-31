@@ -1,39 +1,40 @@
-# streamlit==1.33.0
-# pandas==2.2.2
-# numpy==1.26.4
-# pillow==10.3.0
-# opencv-python==4.9.0.80
+# ============================================================
+# Smart Waste Management System - Dependencies
+# ============================================================
 
-# Core dependencies
+# ------------------- Core Dependencies ----------------------
 streamlit==1.33.0
 pandas==2.2.2
 numpy==1.26.4
 pillow==10.3.0
 opencv-python==4.9.0.80
 
-# TensorFlow untuk Apple Silicon (M4)
-tensorflow==2.16.1  # Versi terbaru dengan native ARM64 support
-tensorflow-metal==1.1.0  # Untuk GPU acceleration via Metal
+# ------------------- Machine Learning -----------------------
+# TensorFlow for Apple Silicon (M1/M2/M3/M4)
+tensorflow==2.16.1          # Native ARM64 support
+tensorflow-metal==1.1.0     # GPU acceleration via Metal
 
-# Keras (bundled with TensorFlow 2.16+)
+# ONNX Runtime for YOLOv8 inference
+onnxruntime==1.17.3
 
-# Data Visualization
+# ------------------- Data Visualization ---------------------
 matplotlib==3.8.4
 plotly==5.22.0
 seaborn==0.13.2
 
-# Image Processing
+# ------------------- Image Processing -----------------------
 scikit-image==0.22.0
 imageio==2.34.0
 
-# Utilities
+# ------------------- Utilities ------------------------------
 scikit-learn==1.5.0
 tqdm==4.66.4
 pyyaml==6.0.1
+python-dotenv==1.0.1
 
-# MQTT for IoT
+# ------------------- MQTT for IoT ---------------------------
 paho-mqtt==2.1.0
 
-# For TensorFlow
+# ------------------- TensorFlow Support ---------------------
 protobuf==3.20.3
 h5py==3.11.0
