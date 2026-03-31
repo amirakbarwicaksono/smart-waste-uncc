@@ -1,46 +1,47 @@
 ```markdown
-# ♻️ Smart Waste Management System (SWMS)
+### ♻️ Smart Waste Management System (SWMS)
 
 A comprehensive IoT-based smart waste management system with AI-powered waste classification, MQTT integration, and blockchain-ready architecture.
 
-## 🚀 Features
+### 🚀 Features
 
 ### Core Features
-- **AI Waste Classification** - Multi-stage hierarchical classification using YOLOv8 ONNX models
-- **Real-time MQTT Communication** - Publish/Subscribe architecture for IoT integration
-- **User Authentication** - Secure login via MQTT (User Hash ID) or manual barcode
-- **Session Management** - Auto timeout and session tracking
-- **Weight Sensor Integration** - User confirmation flag for blockchain verification
-- **Blockchain Simulation** - Motoko-style blockchain simulator with points system
+**AI Waste Classification** Multi-stage hierarchical classification using YOLOv8 ONNX models
+**Real-time MQTT Communicaon** - Publish/Subscribe architecture for IoT integration
+**User Authentication** Secure login via MQTT (User Hash ID) or manual barcode
+**Session Management** Auto timeout and session tracking
+**Weight Sensor Inteation** - User confirmation flag for blockchain verification
+**Blockchain Simulion** - Motoko-style blockchain simulator with points system
 
 ### System Components
-- **User Mode** - Interactive waste disposal interface with camera/upload options
-- **Admin Mode** - Testing and override capabilities
-- **Dashboard** - Real-time monitoring and analytics
-- **Digital Twin** - Virtual representation of physical bins
-- **Blockchain Dashboard** - Live transaction feed, points tracking, and analytics
+**User Mode** - Interactive waste disposal interface with camera/upload options
+**Admin Mode** - Testing and override capabilities
+**Dashboard** - Real-time monitoring and analytics
+**Digital Twin** - Virtual representation of physical bins
+**Blockchain Dashboard** - Live transaction feed, points tracking, and analytics
 
 ### Blockchain Features (Simulator)
-- **Transaction Recording** - Immutable record of verified waste disposals
-- **Points System** - 0.5 points per verified transaction
-- **User Statistics** - Track total points and transaction history
-- **Verification Logic** - Only `weight_status=True` transactions are hashed to blockchain
-- **Live Dashboard** - Real-time charts, top contributors, transaction feed
+**Transaction Recording** - Immutable record of verified waste disposals
+**Points System** - 0.5 points per verified transaction
+**User Statistics** - Track total points and transaction history
+**Verification Logic** - Only `weight_status=True` transactions are hashed to blockchain
+**Live Dashboard** - Real-time charts, top contributors, transaction feed
 
 ### Technical Specifications
-- **AI Models**: YOLOv8 ONNX (root + specialist models)
-- **ML Framework**: TensorFlow 2.16+, ONNX Runtime
-- **MQTT Broker**: Mosquitto / any MQTT 3.1.1 compliant broker
-- **Frontend**: Streamlit
-- **Database**: CSV-based logging (transactions, latency metrics)
-- **Blockchain**: Simulator mode (Motoko-ready architecture)
+**AI Models**: YOLOv8 ONNX (root + specialist models)
+**ML Framework**: TensorFlow 2.16+, ONNX Runtime
+**MQTT Broker**: Mosquitto / any MQTT 3.1.1 compliant broker
+**Frontend**: Streamlit
+**Database**: CSV-based logging (transactions, latency metrics)
+**Blockchain**: Simulator mode (Motoko-ready architecture)
 
-## 📋 Prerequisites
+### 📋 Prerequisites
 
 - Python 3.9+
 - MQTT Broker (e.g., Mosquitto)
 - Webcam (for camera capture)
 - macOS / Linux / Windows
+```
 
 ## 🛠️ Installation
 
