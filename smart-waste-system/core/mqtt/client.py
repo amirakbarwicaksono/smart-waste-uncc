@@ -119,3 +119,40 @@ def disconnect_mqtt():
         mqtt_client.loop_stop()
         mqtt_client.disconnect()
         print("✅ MQTT Disconnected")
+
+
+# =============================
+# FUNGSI KHUSUS UNTUK WEIGHT SENSOR
+# =============================
+
+def publish_weight_status(user_id, user_hash, waste_type, bin_type, weight_status):
+    """
+    Publish weight status dari ESP32 ke MQTT.
+    Fungsi ini biasanya dipanggil oleh ESP32.
+    """
+    payload = {
+        "timestamp": time.time(),
+        "user_id": user_id,
+        "user_hash": user_hash,
+        "waste_type": waste_type,
+        "bin_type": bin_type,
+        "weight_status": weight_status,
+        "source": "esp32"
+    }
+    publish("smartwaste/user/weight", payload)
+
+
+def subscribe_weight_status(callback):
+    """
+    Subscribe ke topic weight status.
+    Callback akan dipanggil saat ESP32 mengirim weight_status.
+    """
+    subscribe("smartwaste/user/weight", callback)
+
+
+def subscribe_bin_control(callback):
+    """
+    Subscribe ke topic bin control.
+    Callback akan dipanggil saat user_mode mengirim perintah open/close.
+    """
+    subscribe("smart_waste/bin", callback)

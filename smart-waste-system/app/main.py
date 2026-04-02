@@ -117,30 +117,6 @@ with col4:
 
 st.divider()
 
-# st.info("📡 **Waiting for RFID/MQTT signal...**\n\nTap your card or wait for system to detect your user ID.")
-
-# # =============================
-# # DEBUG: Tampilkan pesan terakhir
-# # =============================
-# with st.expander("🔧 Debug - Last MQTT Message"):
-#     try:
-#         messages = get_messages()
-#         if messages:
-#             st.write("Raw message:")
-#             st.json(messages[-1])
-            
-#             last = messages[-1]
-#             if isinstance(last, dict):
-#                 st.write("Keys:", list(last.keys()))
-#                 if 'userHashId' in last:
-#                     st.success(f"✅ userHashId found: {last['userHashId'][:16]}...")
-#                 if 'user_id' in last:
-#                     st.info(f"📝 user_id: {last['user_id']}")
-#         else:
-#             st.write("No messages received yet")
-#     except Exception as e:
-#         st.write(f"Error: {e}")
-
 # REFRESH LOGIC
 if st.session_state.latest_user_id is None:
     time.sleep(0.5)
