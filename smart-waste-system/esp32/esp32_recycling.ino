@@ -1,7 +1,6 @@
 // ============================================================
-// Smart Waste Bin - ESP32 Code
+// Smart Waste Bin - ESP32 Code (Slave Mode)
 // Bin Type: RECYCLING
-// Compatible with ESP32 Arduino Core 3.x
 // ============================================================
 
 #include <WiFi.h>
@@ -14,44 +13,37 @@
 // ============================================================
 #define BIN_TYPE "recycling"
 
-// WiFi Credentials (GANTI DENGAN SSID DAN PASSWORD ANDA)
-const char* ssid = "FTI-USAKTI";
-const char* password = "trisakti2026";
+const char* ssid = "Firas";
+const char* password = "11111111";
 
-// MQTT Broker
-const char* mqtt_server = "10.24.81.14";  // Bisa diganti dengan broker lain
+const char* mqtt_server = "10.81.235.53";
 const int mqtt_port = 1883;
 
-// MQTT Topics
 const char* mqtt_topic_bin = "smart_waste/bin";
 const char* mqtt_topic_weight = "smartwaste/user/weight";
 
 // Pin Definitions
-#define PIN_SERVO     13      // Servo signal pin (PWM)
-#define PIN_HX711_DT  4       // HX711 Data pin
-#define PIN_HX711_SCK 5       // HX711 Clock pin
-#define PIN_LED_RED   14      // LED Red
-#define PIN_LED_GREEN 12      // LED Green
-#define PIN_LED_BLUE  27      // LED Blue
+#define PIN_SERVO     13
+#define PIN_HX711_DT  4
+#define PIN_HX711_SCK 5
+#define PIN_LED_RED   14
+#define PIN_LED_GREEN 12
+#define PIN_LED_BLUE  27
 
-// Servo PWM Parameters (ESP32 Core 3.x)
-#define SERVO_PIN     13      // Pin for servo
-#define SERVO_FREQ    50      // 50Hz = 20ms period
-#define SERVO_RES     12      // 12-bit resolution (0-4095)
-
-// Servo Pulse Width (microseconds)
-#define SERVO_MIN_US  500     // 0.5ms (0 degrees)
-#define SERVO_MAX_US  2500    // 2.5ms (180 degrees)
-
-// Convert microseconds to duty cycle
+// Servo PWM Parameters
+#define SERVO_FREQ    50
+#define SERVO_RES     12
+#define SERVO_MIN_US  500
+#define SERVO_MAX_US  2500
 #define US_TO_DUTY(us) (((us) * (1 << SERVO_RES)) / 20000)
 
 // Weight Sensor Parameters
-#define WEIGHT_THRESHOLD 50   // Minimum weight (grams)
+#define WEIGHT_THRESHOLD 50
 #define WEIGHT_SAMPLE_COUNT 5
 
-// Bin Parameters
-#define BIN_OPEN_DURATION 30  // Seconds
+// Timing Parameters
+#define USER_PLACEMENT_TIME 10000   // 10 seconds
+#define MONITORING_TIME 20000       // 20 seconds
 
 // ============================================================
 // GLOBAL VARIABLES
@@ -60,17 +52,26 @@ WiFiClient espClient;
 PubSubClient client(espClient);
 HX711 scale;
 
-// State variables
 bool isOpen = false;
 bool isProcessing = false;
 String currentWasteType = "";
-String currentTransactionId = "";
 String currentUserId = "";
-String currentUserHash = "";
-String lastMessageId = "";
+String currentTransactionId = "";
 
-// PWM channel for servo (ESP32 Core 3.x uses ledcAttach)
-int servoChannel = 0;
+// State machine
+enum BinState {
+  BIN_IDLE,
+  BIN_WAITING_USER,
+  BIN_MONITORING,
+};
+
+BinState currentState = BIN_IDLE;
+unsigned long stateStartTime = 0;
+float maxWeight = 0;
+unsigned long lastWeightCheck = 0;
+unsigned long lastStatusPrint = 0;
+bool phase1Completed = false;
+int lastPrintedSecond = -1;
 
 // ============================================================
 // LED CONTROL
@@ -80,19 +81,19 @@ void setLED(String status) {
     digitalWrite(PIN_LED_RED, LOW);
     digitalWrite(PIN_LED_GREEN, HIGH);
     digitalWrite(PIN_LED_BLUE, LOW);
-    Serial.println("🔵 LED: Standby (Green)");
+    Serial.println("LED: Standby (Green)");
   } 
   else if (status == "active") {
     digitalWrite(PIN_LED_RED, LOW);
     digitalWrite(PIN_LED_GREEN, LOW);
     digitalWrite(PIN_LED_BLUE, HIGH);
-    Serial.println("🔵 LED: Active (Blue)");
+    Serial.println("LED: Active (Blue)");
   } 
   else if (status == "error") {
     digitalWrite(PIN_LED_RED, HIGH);
     digitalWrite(PIN_LED_GREEN, LOW);
     digitalWrite(PIN_LED_BLUE, LOW);
-    Serial.println("🔴 LED: Error (Red)");
+    Serial.println("LED: Error (Red)");
   } 
   else if (status == "blink") {
     static unsigned long lastBlink = 0;
@@ -108,38 +109,27 @@ void setLED(String status) {
 }
 
 // ============================================================
-// SERVO CONTROL (ESP32 Core 3.x)
+// SERVO CONTROL
 // ============================================================
 void initServo() {
-  // ESP32 Core 3.x uses ledcAttach(pin, freq, resolution)
   ledcAttach(PIN_SERVO, SERVO_FREQ, SERVO_RES);
-  
-  // Set to closed position
   int duty = US_TO_DUTY(SERVO_MIN_US);
   ledcWrite(PIN_SERVO, duty);
-  Serial.println("✅ Servo initialized (closed position)");
-  Serial.printf("   Frequency: %d Hz, Resolution: %d bits\n", SERVO_FREQ, SERVO_RES);
+  Serial.println("Servo initialized (closed position)");
 }
 
 void setServoAngle(int angle) {
-  // Constrain angle to 0-180
   if (angle < 0) angle = 0;
   if (angle > 180) angle = 180;
-  
-  // Map angle to pulse width (500-2500 us)
   int pulseWidth = SERVO_MIN_US + (angle * (SERVO_MAX_US - SERVO_MIN_US) / 180);
-  
-  // Set PWM duty cycle
   int duty = US_TO_DUTY(pulseWidth);
   ledcWrite(PIN_SERVO, duty);
-  
-  Serial.printf("Servo angle: %d°, pulse: %d us, duty: %d\n", angle, pulseWidth, duty);
 }
 
 void openBin() {
   if (!isOpen) {
-    Serial.println("📦 Opening bin...");
-    setServoAngle(180);  // Open position
+    Serial.println("Opening bin...");
+    setServoAngle(180);
     isOpen = true;
     setLED("active");
   }
@@ -147,8 +137,8 @@ void openBin() {
 
 void closeBin() {
   if (isOpen) {
-    Serial.println("🔒 Closing bin...");
-    setServoAngle(0);    // Closed position
+    Serial.println("Closing bin...");
+    setServoAngle(0);
     isOpen = false;
     setLED("standby");
   }
@@ -158,12 +148,11 @@ void closeBin() {
 // WEIGHT SENSOR
 // ============================================================
 void calibrateScale() {
-  Serial.println("⚖️ Calibrating scale...");
+  Serial.println("Calibrating scale...");
   Serial.println("Make sure no weight on the scale");
   delay(3000);
-  
   scale.tare();
-  Serial.println("✅ Scale tared");
+  Serial.println("Scale tared");
 }
 
 float readWeight() {
@@ -175,103 +164,133 @@ float readWeight() {
   return 0;
 }
 
-bool isWeightDetected() {
-  float weight = readWeight();
-  bool detected = (weight > WEIGHT_THRESHOLD);
-  
-  if (detected) {
-    Serial.printf("⚖️ Weight detected: %.2f g\n", weight);
-  } else {
-    Serial.printf("⚖️ Weight: %.2f g\n", weight);
-  }
-  
-  return detected;
-}
-
 // ============================================================
-// MQTT PUBLISH (using JsonDocument - new ArduinoJson v7)
+// SEND FINAL WEIGHT REPORT - SESUAI SPESIFIKASI
 // ============================================================
-void publishWeightStatus(bool weightDetected) {
-  JsonDocument doc;  // Use JsonDocument instead of StaticJsonDocument
+void sendFinalWeightReport() {
+  bool weightDetected = (maxWeight > WEIGHT_THRESHOLD);
   
-  doc["timestamp"] = millis() / 1000;
-  doc["user_id"] = currentUserId;
-  doc["user_hash"] = currentUserHash;
-  doc["waste_type"] = currentWasteType;
-  doc["bin_type"] = BIN_TYPE;
+  // Hanya field yang sesuai spesifikasi
+  JsonDocument doc;
   doc["weight_status"] = weightDetected;
-  doc["source"] = "esp32";
-  doc["transaction_id"] = currentTransactionId;
-  
-  String output;
-  serializeJson(doc, output);
-  
-  if (client.publish(mqtt_topic_weight, output.c_str())) {
-    Serial.printf("📤 Weight status published: %s\n", weightDetected ? "TRUE" : "FALSE");
-  } else {
-    Serial.println("❌ Failed to publish weight status");
-  }
-}
-
-void publishBinStatus(String state, float duration) {
-  JsonDocument doc;  // Use JsonDocument instead of StaticJsonDocument
-  
-  doc["timestamp"] = millis() / 1000;
-  doc["barcode"] = currentUserHash.isEmpty() ? currentUserId : currentUserHash;
   doc["waste_type"] = currentWasteType;
   doc["bin_type"] = BIN_TYPE;
-  doc["state"] = state;
-  doc["duration"] = duration;
-  doc["transaction_id"] = currentTransactionId;
+  doc["user_id"] = currentUserId;
   
   String output;
   serializeJson(doc, output);
   
-  if (client.publish(mqtt_topic_bin, output.c_str())) {
-    Serial.printf("📤 Bin status published: %s\n", state.c_str());
-  } else {
-    Serial.println("❌ Failed to publish bin status");
+  // Pastikan MQTT connected
+  if (!client.connected()) {
+    Serial.println("MQTT not connected, reconnecting...");
+    reconnectMQTT();
+  }
+  
+  // Kirim dengan retry
+  bool sent = false;
+  for (int attempt = 0; attempt < 3; attempt++) {
+    if (client.publish(mqtt_topic_weight, output.c_str())) {
+      Serial.printf("Weight report sent: %s\n", output.c_str());
+      sent = true;
+      break;
+    }
+    delay(100);
+    client.loop();
+  }
+  
+  if (!sent) {
+    Serial.println("Failed to send weight report!");
   }
 }
 
 // ============================================================
-// BIN OPERATION
+// START BIN OPERATION
+// ============================================================
+void startBinOperation() {
+  Serial.println("Starting bin operation (30 second monitoring)...");
+  openBin();
+  
+  maxWeight = 0;
+  lastWeightCheck = 0;
+  lastStatusPrint = 0;
+  lastPrintedSecond = -1;
+  phase1Completed = false;
+  
+  currentState = BIN_WAITING_USER;
+  stateStartTime = millis();
+  
+  Serial.printf("Phase 1: User has %d seconds to place waste\n", USER_PLACEMENT_TIME / 1000);
+}
+
+// ============================================================
+// PROCESS BIN OPERATION
 // ============================================================
 void processBinOperation() {
-  Serial.println("🚮 Starting bin operation...");
+  if (currentState == BIN_IDLE) return;
   
-  openBin();
-  publishBinStatus("open", 0);
+  unsigned long now = millis();
+  unsigned long elapsed = now - stateStartTime;
   
-  // Wait for user to place waste
-  Serial.println("⏳ Waiting for waste placement...");
-  delay(2000);
+  // KRITICAL: Keep MQTT alive during entire operation
+  client.loop();
   
-  bool weightDetected = isWeightDetected();
-  publishWeightStatus(weightDetected);
-  
-  // Keep bin open
-  if (weightDetected) {
-    Serial.printf("📦 Bin will stay open for %d seconds\n", BIN_OPEN_DURATION);
-    for (int i = BIN_OPEN_DURATION; i > 0; i--) {
-      Serial.printf("   Closing in %d seconds...\n", i);
-      delay(1000);
-    }
-  } else {
-    Serial.println("⚠️ No waste detected, closing bin early...");
-    delay(2000);
+  switch(currentState) {
+    case BIN_WAITING_USER:
+      if (elapsed >= USER_PLACEMENT_TIME) {
+        if (!phase1Completed) {
+          phase1Completed = true;
+          Serial.println("Phase 2: Monitoring weight for 20 seconds");
+          currentState = BIN_MONITORING;
+          stateStartTime = now;
+          lastWeightCheck = 0;
+        }
+      } else {
+        int currentSecond = (USER_PLACEMENT_TIME - elapsed) / 1000;
+        if (currentSecond != lastPrintedSecond && currentSecond >= 0 && currentSecond <= 10) {
+          lastPrintedSecond = currentSecond;
+          if (currentSecond > 0) {
+            Serial.printf("  Place waste in: %d seconds\n", currentSecond);
+          }
+        }
+      }
+      break;
+      
+    case BIN_MONITORING:
+      // Check weight every 500ms
+      if (now - lastWeightCheck >= 500) {
+        lastWeightCheck = now;
+        float currentWeight = readWeight();
+        if (currentWeight > maxWeight) {
+          maxWeight = currentWeight;
+        }
+      }
+      
+      // Print status every 2 seconds (reduce serial noise)
+      if (now - lastStatusPrint >= 2000) {
+        lastStatusPrint = now;
+        float elapsedSec = elapsed / 1000.0;
+        Serial.printf("  Monitoring: %.1f sec, Max weight: %.2f g\n", elapsedSec, maxWeight);
+      }
+      
+      if (elapsed >= MONITORING_TIME) {
+        Serial.println("Monitoring complete, sending final report...");
+        sendFinalWeightReport();
+        closeBin();
+        
+        Serial.printf("Bin operation complete. Max weight: %.2f g, Detection: %s\n", 
+                      maxWeight, (maxWeight > WEIGHT_THRESHOLD) ? "YES" : "NO");
+        
+        isProcessing = false;
+        currentWasteType = "";
+        currentUserId = "";
+        currentTransactionId = "";
+        currentState = BIN_IDLE;
+      }
+      break;
+      
+    default:
+      break;
   }
-  
-  closeBin();
-  publishBinStatus("closed", BIN_OPEN_DURATION);
-  
-  Serial.println("✅ Bin operation complete");
-  
-  isProcessing = false;
-  currentTransactionId = "";
-  currentWasteType = "";
-  currentUserId = "";
-  currentUserHash = "";
 }
 
 // ============================================================
@@ -283,43 +302,41 @@ void callback(char* topic, byte* payload, unsigned int length) {
     message += (char)payload[i];
   }
   
-  Serial.printf("📥 MQTT: %s\n", message.c_str());
+  Serial.printf("MQTT Received [%s]: %s\n", topic, message.c_str());
   
   if (strcmp(topic, mqtt_topic_bin) != 0) return;
   
-  JsonDocument doc;  // Use JsonDocument instead of StaticJsonDocument
+  JsonDocument doc;
   DeserializationError error = deserializeJson(doc, message);
   
   if (error) {
-    Serial.printf("❌ JSON error: %s\n", error.c_str());
+    Serial.printf("JSON parsing error: %s\n", error.c_str());
     return;
   }
   
   String targetBin = doc["bin_type"] | "";
   if (targetBin != BIN_TYPE) {
-    Serial.printf("⏭️ Not for this bin\n");
-    return;
-  }
-  
-  if (isProcessing) {
-    Serial.println("⏭️ Busy");
+    Serial.printf("Command not for this bin (target: %s, my: %s)\n", targetBin.c_str(), BIN_TYPE);
     return;
   }
   
   String state = doc["state"] | "";
+  
   if (state == "open") {
+    if (isProcessing || currentState != BIN_IDLE) {
+      Serial.println("Busy, ignoring open command");
+      return;
+    }
+    
+    currentUserId = doc["barcode"] | "";
     currentWasteType = doc["waste_type"] | "unknown";
     currentTransactionId = doc["transaction_id"] | "";
-    currentUserId = doc["user_id"] | "";
-    currentUserHash = doc["barcode"] | "";
     
-    if (currentUserId.isEmpty()) currentUserId = currentUserHash;
-    
-    Serial.printf("🎯 Processing: %s\n", currentWasteType.c_str());
+    Serial.printf("Open command received - User: %s, Waste: %s\n", 
+                  currentUserId.c_str(), currentWasteType.c_str());
     
     isProcessing = true;
-    setLED("blink");
-    processBinOperation();
+    startBinOperation();
   }
 }
 
@@ -332,11 +349,12 @@ void reconnectMQTT() {
     String clientId = "SmartBin-" + String(BIN_TYPE) + "-" + String(random(0xffff), HEX);
     
     if (client.connect(clientId.c_str())) {
-      Serial.println("✅ Connected");
+      Serial.println("Connected");
       client.subscribe(mqtt_topic_bin);
+      Serial.printf("Subscribed to: %s\n", mqtt_topic_bin);
       setLED("standby");
     } else {
-      Serial.print("❌ Failed, rc=");
+      Serial.print("Failed, rc=");
       Serial.print(client.state());
       Serial.println(" retrying...");
       setLED("error");
@@ -360,9 +378,9 @@ void setupWiFi() {
   }
   
   if (WiFi.status() == WL_CONNECTED) {
-    Serial.printf("\n✅ WiFi connected, IP: %s\n", WiFi.localIP().toString().c_str());
+    Serial.printf("\nWiFi connected, IP: %s\n", WiFi.localIP().toString().c_str());
   } else {
-    Serial.println("\n❌ WiFi failed!");
+    Serial.println("\nWiFi connection failed!");
   }
 }
 
@@ -371,39 +389,39 @@ void setupWiFi() {
 // ============================================================
 void setup() {
   Serial.begin(115200);
-  Serial.printf("\n🚀 Smart Bin: %s\n", BIN_TYPE);
+  Serial.printf("\nSmart Bin: %s\n", BIN_TYPE);
+  Serial.println("==========================================");
   
-  // LED pins
   pinMode(PIN_LED_RED, OUTPUT);
   pinMode(PIN_LED_GREEN, OUTPUT);
   pinMode(PIN_LED_BLUE, OUTPUT);
   setLED("blink");
   
-  // Servo PWM (ESP32 Core 3.x)
   initServo();
   
-  // Weight sensor
   scale.begin(PIN_HX711_DT, PIN_HX711_SCK);
   calibrateScale();
   
-  // WiFi
   setupWiFi();
   
-  // MQTT
   client.setServer(mqtt_server, mqtt_port);
   client.setCallback(callback);
   
-  Serial.println("✅ Ready");
+  Serial.println("System Ready");
+  Serial.println("==========================================");
   setLED("standby");
 }
 
 // ============================================================
-// LOOP
+// MAIN LOOP
 // ============================================================
 void loop() {
   if (!client.connected()) {
     reconnectMQTT();
   }
-  client.loop();
+  
+  client.loop();  // This must run frequently!
+  processBinOperation();
+  
   delay(10);
 }
