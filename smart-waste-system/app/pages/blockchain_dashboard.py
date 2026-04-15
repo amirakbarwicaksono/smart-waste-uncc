@@ -413,7 +413,11 @@ if all_transactions:
 st.markdown("### 🔄 Live Transaction Feed")
 
 if all_transactions:
-    for tx in all_transactions[:8]:
+    # 🔧 FIX: Sort transactions by timestamp (newest first)
+    sorted_tx = sorted(all_transactions, key=lambda x: x.get('timestamp', ''), reverse=True)
+    
+    # Display last 10 transactions (newest first)
+    for tx in sorted_tx[:10]:
         tx_id = tx.get('transaction_id', 'unknown')[:12]
         timestamp = format_timestamp(tx.get('timestamp', ''))
         waste_type = tx.get('waste', {}).get('type', 'Unknown')
@@ -442,6 +446,11 @@ if all_transactions:
             </div>
         </div>
         """, unsafe_allow_html=True)
+    
+    # Show timestamp of latest transaction
+    if sorted_tx:
+        latest_ts = sorted_tx[0].get('timestamp', '')
+        st.caption(f"📡 Last updated: {format_timestamp(latest_ts)} (showing 10 most recent)")
 else:
     st.info("ℹ️ No transactions recorded yet")
 

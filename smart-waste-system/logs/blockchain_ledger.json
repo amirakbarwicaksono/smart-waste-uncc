@@ -269,18 +269,266 @@
         "reward_reason": "weight_confirmed"
       },
       "hash": "9247aa3a102a8c0420ecffd52b6b504af57831389634d5a56177c6594389a452"
+    },
+    {
+      "transaction_id": "d1c863f9-dad2-4e03-90e1-0b4cd067e530",
+      "timestamp": "2026-04-13T14:44:57.716345",
+      "user": {
+        "hash": "4ca0cfe3a5a8416624e2bf7518cf118cd6baa131def07c61f4b9419f7e3dbbd",
+        "display_name": "4ca0cfe3a5a8416624e2bf7518cf118cd6baa131def07c61f4b9419f7e3dbbd1"
+      },
+      "waste": {
+        "type": "Paper",
+        "bin_type": "recycling"
+      },
+      "verification": {
+        "weight_detected": true,
+        "is_valid": true
+      },
+      "metrics": {
+        "duration_seconds": 30,
+        "points_earned": 0.5,
+        "reward_reason": "weight_confirmed"
+      },
+      "hash": "207ff867a095ce98fcd70b19985d2db95cda8aeee030970f0593bf82d84cef9b"
+    },
+    {
+      "transaction_id": "d52002af-0a86-4aed-9927-9db4c46c8f88",
+      "timestamp": "2026-04-13T14:45:20.878392",
+      "user": {
+        "hash": "4ca0cfe3a5a8416624e2bf7518cf118cd6baa131def07c61f4b9419f7e3dbbd",
+        "display_name": "4ca0cfe3a5a8416624e2bf7518cf118cd6baa131def07c61f4b9419f7e3dbbd1"
+      },
+      "waste": {
+        "type": "Paper",
+        "bin_type": "recycling"
+      },
+      "verification": {
+        "weight_detected": true,
+        "is_valid": true
+      },
+      "metrics": {
+        "duration_seconds": 30,
+        "points_earned": 0.5,
+        "reward_reason": "weight_confirmed"
+      },
+      "hash": "52947ce1354411ec36289699dee8c7cde9aa056dcec7c01f9ef1e2917f6b6b42"
+    },
+    {
+      "transaction_id": "b4c27fd1-23dc-4d74-814b-14f183c693c5",
+      "timestamp": "2026-04-13T14:45:35.901087",
+      "user": {
+        "hash": "4ca0cfe3a5a8416624e2bf7518cf118cd6baa131def07c61f4b9419f7e3dbbd",
+        "display_name": "4ca0cfe3a5a8416624e2bf7518cf118cd6baa131def07c61f4b9419f7e3dbbd1"
+      },
+      "waste": {
+        "type": "Paper",
+        "bin_type": "recycling"
+      },
+      "verification": {
+        "weight_detected": true,
+        "is_valid": true
+      },
+      "metrics": {
+        "duration_seconds": 30,
+        "points_earned": 0.5,
+        "reward_reason": "weight_confirmed"
+      },
+      "hash": "54276ca32d9ccd15ae6bea8b1073eeafdd6a5fd81eca795002ac61e3510954e4"
+    },
+    {
+      "transaction_id": "665eed50-6be8-42bf-a315-f579495b4bca",
+      "timestamp": "2026-04-13T14:45:48.387345",
+      "user": {
+        "hash": "4ca0cfe3a5a8416624e2bf7518cf118cd6baa131def07c61f4b9419f7e3dbbd",
+        "display_name": "4ca0cfe3a5a8416624e2bf7518cf118cd6baa131def07c61f4b9419f7e3dbbd1"
+      },
+      "waste": {
+        "type": "Paper",
+        "bin_type": "recycling"
+      },
+      "verification": {
+        "weight_detected": true,
+        "is_valid": true
+      },
+      "metrics": {
+        "duration_seconds": 30,
+        "points_earned": 0.5,
+        "reward_reason": "weight_confirmed"
+      },
+      "hash": "dff730e792d43c971d74f1034159179f94054e7a1c70ace196d6cc25cf1a7e73"
+    },
+    {
+      "transaction_id": "fee64621-4651-45fe-a8b3-0e2e5713371d",
+      "timestamp": "2026-04-13T14:46:02.684204",
+      "user": {
+        "hash": "4ca0cfe3a5a8416624e2bf7518cf118cd6baa131def07c61f4b9419f7e3dbbd",
+        "display_name": "4ca0cfe3a5a8416624e2bf7518cf118cd6baa131def07c61f4b9419f7e3dbbd1"
+      },
+      "waste": {
+        "type": "Paper",
+        "bin_type": "recycling"
+      },
+      "verification": {
+        "weight_detected": true,
+        "is_valid": true
+      },
+      "metrics": {
+        "duration_seconds": 30,
+        "points_earned": 0.5,
+        "reward_reason": "weight_confirmed"
+      },
+      "hash": "affafb155c9ee72da96dc0c163f8e010359a48ce8470a2f64ecd594391eac988"
+    },
+    {
+      "transaction_id": "d2d84c79-5c98-40bf-8fe9-5647ef60ee26",
+      "timestamp": "2026-04-13T14:46:18.495530",
+      "user": {
+        "hash": "4ca0cfe3a5a8416624e2bf7518cf118cd6baa131def07c61f4b9419f7e3dbbd",
+        "display_name": "4ca0cfe3a5a8416624e2bf7518cf118cd6baa131def07c61f4b9419f7e3dbbd1"
+      },
+      "waste": {
+        "type": "Paper",
+        "bin_type": "recycling"
+      },
+      "verification": {
+        "weight_detected": true,
+        "is_valid": true
+      },
+      "metrics": {
+        "duration_seconds": 30,
+        "points_earned": 0.5,
+        "reward_reason": "weight_confirmed"
+      },
+      "hash": "976a50e08153b6acb990b9bea338d5080851830f12fdd82bebe59a2aee6e2d1f"
+    },
+    {
+      "transaction_id": "ebfe0452-1422-453c-9b68-2e25e3ce6bb5",
+      "timestamp": "2026-04-13T14:46:29.193431",
+      "user": {
+        "hash": "4ca0cfe3a5a8416624e2bf7518cf118cd6baa131def07c61f4b9419f7e3dbbd",
+        "display_name": "4ca0cfe3a5a8416624e2bf7518cf118cd6baa131def07c61f4b9419f7e3dbbd1"
+      },
+      "waste": {
+        "type": "Paper",
+        "bin_type": "recycling"
+      },
+      "verification": {
+        "weight_detected": true,
+        "is_valid": true
+      },
+      "metrics": {
+        "duration_seconds": 30,
+        "points_earned": 0.5,
+        "reward_reason": "weight_confirmed"
+      },
+      "hash": "30f9c204458c9aad8eb29a021fd5aa1b7680fab635ba22efe0d179f4a7c83437"
+    },
+    {
+      "transaction_id": "ba93a117-3800-4484-9dff-8e6a53cc97d1",
+      "timestamp": "2026-04-13T14:46:41.417959",
+      "user": {
+        "hash": "4ca0cfe3a5a8416624e2bf7518cf118cd6baa131def07c61f4b9419f7e3dbbd",
+        "display_name": "4ca0cfe3a5a8416624e2bf7518cf118cd6baa131def07c61f4b9419f7e3dbbd1"
+      },
+      "waste": {
+        "type": "Paper",
+        "bin_type": "recycling"
+      },
+      "verification": {
+        "weight_detected": true,
+        "is_valid": true
+      },
+      "metrics": {
+        "duration_seconds": 30,
+        "points_earned": 0.5,
+        "reward_reason": "weight_confirmed"
+      },
+      "hash": "f4309b70eabdeefd81222e67a3f8e13ef2c667c7ea3a57d6af760d2023a5a7c7"
+    },
+    {
+      "transaction_id": "111097a0-fca6-4dff-9ef0-0f9de43e8bcf",
+      "timestamp": "2026-04-13T14:46:55.673370",
+      "user": {
+        "hash": "4ca0cfe3a5a8416624e2bf7518cf118cd6baa131def07c61f4b9419f7e3dbbd",
+        "display_name": "4ca0cfe3a5a8416624e2bf7518cf118cd6baa131def07c61f4b9419f7e3dbbd1"
+      },
+      "waste": {
+        "type": "Paper",
+        "bin_type": "recycling"
+      },
+      "verification": {
+        "weight_detected": true,
+        "is_valid": true
+      },
+      "metrics": {
+        "duration_seconds": 30,
+        "points_earned": 0.5,
+        "reward_reason": "weight_confirmed"
+      },
+      "hash": "c07d671e6e9508f5db22ffed0cf4ff7244c1d91c3ded0a8b3354428cbee036bd"
+    },
+    {
+      "transaction_id": "eefedaf3-8ee3-4660-98c1-17b8f0b17a97",
+      "timestamp": "2026-04-13T14:47:08.752098",
+      "user": {
+        "hash": "4ca0cfe3a5a8416624e2bf7518cf118cd6baa131def07c61f4b9419f7e3dbbd",
+        "display_name": "4ca0cfe3a5a8416624e2bf7518cf118cd6baa131def07c61f4b9419f7e3dbbd1"
+      },
+      "waste": {
+        "type": "Paper",
+        "bin_type": "recycling"
+      },
+      "verification": {
+        "weight_detected": true,
+        "is_valid": true
+      },
+      "metrics": {
+        "duration_seconds": 30,
+        "points_earned": 0.5,
+        "reward_reason": "weight_confirmed"
+      },
+      "hash": "f782c83cbb83bc7be8c6af7a12bf92687e5022fa2797ca8b741f33b261f9f9a0"
+    },
+    {
+      "transaction_id": "cecffa97-452c-45ad-a359-0da95d9769ad",
+      "timestamp": "2026-04-15T11:32:17.034680",
+      "user": {
+        "hash": "4ca0cfe3a5a8416624e2bf7518cf118cd6baa131def07c61f4b9419f7e3dbbd",
+        "display_name": "4ca0cfe3a5a8416624e2bf7518cf118cd6baa131def07c61f4b9419f7e3dbbd1"
+      },
+      "waste": {
+        "type": "Paper",
+        "bin_type": "recycling"
+      },
+      "verification": {
+        "weight_detected": true,
+        "is_valid": true
+      },
+      "metrics": {
+        "duration_seconds": 30,
+        "points_earned": 0.5,
+        "reward_reason": "weight_confirmed"
+      },
+      "hash": "bdcc462464425199932942ff687acbf1015a1a447421846ccc96bd2f15ab7bec"
     }
   ],
   "stats": {
-    "total_transactions": 12,
-    "total_users": 1,
-    "total_points_earned": 6.0
+    "total_transactions": 23,
+    "total_users": 2,
+    "total_points_earned": 15.0
   },
   "users": {
     "unknown": {
-      "total_transactions": 12,
-      "total_points": 6.0,
-      "last_active": "2026-03-31T14:57:17.781535",
+      "total_transactions": 19,
+      "total_points": 9.5,
+      "last_active": "2026-04-02T11:20:12.670633",
+      "display_name": "4ca0cfe3a5a8416624e2bf7518cf118cd6baa131def07c61f4b9419f7e3dbbd1"
+    },
+    "4ca0cfe3a5a8416624e2bf7518cf118cd6baa131def07c61f4b9419f7e3dbbd": {
+      "total_transactions": 11,
+      "total_points": 5.5,
+      "last_active": "2026-04-15T11:32:17.035180",
       "display_name": "4ca0cfe3a5a8416624e2bf7518cf118cd6baa131def07c61f4b9419f7e3dbbd1"
     }
   }

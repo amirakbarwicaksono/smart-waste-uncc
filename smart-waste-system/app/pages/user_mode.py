@@ -505,19 +505,41 @@ else:
     col_timer.progress(remaining / st.session_state.state["timeout_seconds"], text=f"⏱️ {int(remaining)}s left")
 
     st.divider()
-    
     # =============================
     # STEP 2: AI PREDICT
     # =============================
     st.subheader("Step 2: Identify Waste")
-    
+
     if not st.session_state.state["predicted_waste"]:
         method = st.radio("Method:", ["📷 Camera", "📁 Upload"], horizontal=True)
         img_file = None
+        
         if method == "📷 Camera":
-            img_file = st.camera_input("Take a photo", key=f"cam_{st.session_state.state['uploader_key']}")
-        else:
-            img_file = st.file_uploader("Upload image", type=['jpg', 'jpeg', 'png'], key=f"file_{st.session_state.state['uploader_key']}")
+            # Informasi untuk pengguna iPhone
+            st.info("""
+            📸 **Camera Guide:**
+            - Your browser will ask for **camera permission** → tap **Allow**
+            - On **iPhone**, use **Safari** or **Chrome** for best results
+            """)
+            
+            img_file = st.camera_input(
+                "Take a photo", 
+                key=f"cam_{st.session_state.state['uploader_key']}",
+                help="Click to take a photo of your waste"
+            )
+            
+            # Tips jika camera_input None
+            if img_file is None:
+                st.caption("💡 Tip: If camera doesn't appear, check browser permissions or use Upload tab")
+        
+        else:  # Upload method
+            st.info("📁 **Upload Guide:** Select a photo from your device")
+            img_file = st.file_uploader(
+                "Upload image", 
+                type=['jpg', 'jpeg', 'png'], 
+                key=f"file_{st.session_state.state['uploader_key']}",
+                help="Upload a photo of your waste"
+            )
         
         if img_file:
             with st.spinner("🔍 AI analyzing..."):
@@ -551,7 +573,7 @@ else:
                 st.session_state.state["weight_confirmed"] = False
                 st.session_state.state["weight_status"] = None
                 st.rerun()
-    
+
     else:
         waste_type = st.session_state.state["predicted_waste"]
         bin_type = st.session_state.state["predicted_bin"]
@@ -559,6 +581,59 @@ else:
         st.info(f"🗑️ **Waste:** {waste_type}")
         st.success(f"📦 **Bin:** {bin_type}")
         st.divider()
+    # # =============================
+    # # STEP 2: AI PREDICT
+    # # =============================
+    # st.subheader("Step 2: Identify Waste")
+    
+    # if not st.session_state.state["predicted_waste"]:
+    #     method = st.radio("Method:", ["📷 Camera", "📁 Upload"], horizontal=True)
+    #     img_file = None
+    #     if method == "📷 Camera":
+    #         img_file = st.camera_input("Take a photo", key=f"cam_{st.session_state.state['uploader_key']}")
+    #     else:
+    #         img_file = st.file_uploader("Upload image", type=['jpg', 'jpeg', 'png'], key=f"file_{st.session_state.state['uploader_key']}")
+        
+    #     if img_file:
+    #         with st.spinner("🔍 AI analyzing..."):
+    #             img = Image.open(img_file)
+    #             waste_type, bin_type = predict_image(img)
+    #             st.session_state.state["predicted_waste"] = waste_type
+    #             st.session_state.state["predicted_bin"] = bin_type
+    #             st.session_state.state["predicted_img"] = img
+    #             st.session_state.state["last_activity"] = datetime.now()
+    #             st.success(f"✅ {waste_type} → {bin_type}")
+                
+    #             # ===== KIRIM MQTT OPEN KE ESP32 =====
+    #             user_identifier = st.session_state.state["active_user_hash"] or st.session_state.state["active_user_id"]
+    #             timestamp = datetime.now().isoformat()
+                
+    #             publish("smart_waste/bin", {
+    #                 "timestamp": timestamp,
+    #                 "barcode": user_identifier,
+    #                 "waste_type": waste_type,
+    #                 "bin_type": bin_type,
+    #                 "state": "open",
+    #                 "duration": 0
+    #             })
+                
+    #             # Log OPEN ke CSV (sebelum weight confirmation)
+    #             log_to_csv(user_identifier, waste_type, bin_type, "open", 0, None)
+                
+    #             st.info(f"📡 Command sent to {bin_type} bin")
+    #             st.session_state.state["bin_opened"] = True
+    #             st.session_state.state["bin_open_time"] = datetime.now()
+    #             st.session_state.state["weight_confirmed"] = False
+    #             st.session_state.state["weight_status"] = None
+    #             st.rerun()
+    
+    # else:
+    #     waste_type = st.session_state.state["predicted_waste"]
+    #     bin_type = st.session_state.state["predicted_bin"]
+        
+    #     st.info(f"🗑️ **Waste:** {waste_type}")
+    #     st.success(f"📦 **Bin:** {bin_type}")
+    #     st.divider()
         
         # =============================
         # STEP 3: WAITING FOR WEIGHT SENSOR (ESP32)
