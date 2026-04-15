@@ -46,3 +46,6 @@ Thumbs.db
 # MQTT Config
 *.conf
 *.secret
+
+cert.pem
+key.pem
